@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 //CSS
-import './index.css';
+import './styles/index.css';
 
 //App
 import EmbodyApp from './components/EmbodyApp';
