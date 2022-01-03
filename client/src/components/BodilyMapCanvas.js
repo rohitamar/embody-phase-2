@@ -1,6 +1,6 @@
 import React from 'react';
 
-class BodilyMapCanvas extends React.Component {
+export default class BodilyMapCanvas extends React.Component {
      constructor() {
 
      }

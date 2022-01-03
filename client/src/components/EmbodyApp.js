@@ -4,7 +4,6 @@ import ParticipantScreen from './components/ParticipantScreen.js';
 import BodilyMapCanvas from './components/BodilyMapCanvas.js';
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import '../styles/App.css';
 
 export default class EmbodyApp extends React.Component {
 
