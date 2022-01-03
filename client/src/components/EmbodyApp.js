@@ -18,17 +18,9 @@ export default class EmbodyApp extends React.Component {
             return (
                   <Router>
                         <div>
-                              <Route path = "/">
-                                    <ParticipantScreen />
-                              </Route>
-                              <Route path = "/activation">
-                                    <div>
-                                          Hello World
-                                    </div>
-                              </Route>
-                              <Route path = "/deactivation">
-                                    <BodilyMapCanvas />
-                              </Route>
+                              <Route path = "/" element = {<ParticipantScreen />} />
+                              <Route path = "/activation" element = {<BodilyMapCanvas />} />
+                              <Route path = "/deactivation" element = {<BodilyMapCanvas />} />
                         </div>
                   </Router>
             );
