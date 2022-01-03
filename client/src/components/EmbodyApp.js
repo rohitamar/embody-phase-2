@@ -22,7 +22,9 @@ export default class EmbodyApp extends React.Component {
                                     <ParticipantScreen />
                               </Route>
                               <Route exact path = "/activation">
-                                    <BodilyMapCanvas />
+                                    <div>
+                                          Hello World
+                                    </div>
                               </Route>
                               <Route exact path = "/deactivation">
                                     <BodilyMapCanvas />
