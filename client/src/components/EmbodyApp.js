@@ -16,6 +16,7 @@ export default class EmbodyApp extends React.Component {
 
       render() {
             return (
+                  /*
                   <Router>
                         <div>
                               <Route exact path = "/">
@@ -31,6 +32,10 @@ export default class EmbodyApp extends React.Component {
                               </Route>
                         </div>
                   </Router>
+                  */
+                 <div>
+                       Hello World
+                 </div>
             );
       }
 }
