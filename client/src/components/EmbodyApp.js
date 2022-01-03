@@ -16,26 +16,21 @@ export default class EmbodyApp extends React.Component {
 
       render() {
             return (
-                  /*
                   <Router>
                         <div>
-                              <Route exact path = "/">
+                              <Route path = "/">
                                     <ParticipantScreen />
                               </Route>
-                              <Route exact path = "/activation">
+                              <Route path = "/activation">
                                     <div>
                                           Hello World
                                     </div>
                               </Route>
-                              <Route exact path = "/deactivation">
+                              <Route path = "/deactivation">
                                     <BodilyMapCanvas />
                               </Route>
                         </div>
                   </Router>
-                  */
-                 <div>
-                       Hello World
-                 </div>
             );
       }
 }

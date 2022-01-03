@@ -12,7 +12,7 @@ export default class ParticipantScreen extends React.Component {
      render() {
           return (
                <div>
-                    <h1>Bodily Heatmaps</h1>
+                    <h1 className = "ParticipantScreen__header">Bodily Heatmaps</h1>
                </div>
           );
      }
