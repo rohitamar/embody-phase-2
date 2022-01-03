@@ -6,7 +6,6 @@ const path = require('path');
 const routes = require('./routes');
 
 const app = express();
-const log = console.log;
 const PORT = process.env.PORT || 8080; 
 
 try {
