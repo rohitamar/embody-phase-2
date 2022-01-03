@@ -1,6 +1,6 @@
 const express = require('express');
 const { isEmpty } = require('lodash');
-const User = require('../models/user');
+const User = require('../models/participant');
 const router = express.Router();
 
 router.post('/add', async (req, res) => {

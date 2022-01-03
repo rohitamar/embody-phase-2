@@ -1,21 +1,35 @@
 import React from 'react';
 
-import './App.css';
+import ParticipantScreen from './components/ParticipantScreen.js';
+import BodilyMapCanvas from './components/BodilyMapCanvas.js';
+
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import '../styles/App.css';
 
 export default class EmbodyApp extends React.Component {
 
-      constructor() {
-            super();
+      constructor(props) {
+            super(props);
             this.state = {
-
+                  sample: 1
             };
       }
 
       render() {
             return (
-                  <div>
-                        Hello World
-                  </div>
+                  <Router>
+                        <div>
+                              <Route exact path = "/">
+                                    <ParticipantScreen />
+                              </Route>
+                              <Route exact path = "/activation">
+                                    <BodilyMapCanvas />
+                              </Route>
+                              <Route exact path = "/deactivation">
+                                    <BodilyMapCanvas />
+                              </Route>
+                        </div>
+                  </Router>
             );
       }
 }
