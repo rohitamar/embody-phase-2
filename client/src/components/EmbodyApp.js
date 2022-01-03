@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ParticipantScreen from './components/ParticipantScreen.js';
-import BodilyMapCanvas from './components/BodilyMapCanvas.js';
+import ParticipantScreen from './ParticipantScreen.js';
+import BodilyMapCanvas from './BodilyMapCanvas.js';
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
