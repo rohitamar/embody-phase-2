@@ -7,6 +7,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { CookiesProvider } from 'react-cookie';
 
+import configureStore from '../store/configureStore';
+import { Provider } from 'react-redux';
+
+//const store = configureStore();
+
 class EmbodyApp extends React.Component {
     constructor(props) {
         super(props);
@@ -14,14 +19,15 @@ class EmbodyApp extends React.Component {
 
     render() {
         return (
-            <CookiesProvider>
-                <Router>
-                    <Routes>
-                        <Route path = "/" element = {<ParticipantScreen />} />
-                        <Route path = "/activation" element = {<BodilyMapCanvas />} />
-                    </Routes>
-                </Router>
-            </CookiesProvider>
+                <CookiesProvider>
+                    <Router>
+                        <Routes>
+                            <Route path = "/" element = {<ParticipantScreen />} />
+                            <Route path = "/activation" element = {<BodilyMapCanvas />} />
+                        </Routes>
+                    </Router>
+                </CookiesProvider>
+            
         );
     }
 }

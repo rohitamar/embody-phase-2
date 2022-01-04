@@ -1,4 +1,5 @@
 @import "./ParticipantScreen.css";
+@import "./BodilyMapCanvas.css";
 
 * {
     box-sizing: border-box;

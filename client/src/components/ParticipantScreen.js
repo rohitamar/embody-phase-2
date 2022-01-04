@@ -6,7 +6,7 @@ class ParticipantScreen extends React.Component {
     }
 
     handleSubmit() {
-
+        
     }
 
     handleInputChange() {
