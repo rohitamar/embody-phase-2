@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 8080;
 
 try {
     mongoose.connect( 
-        process.env.MONGODB_URI || 'mongodb+srv://bodilymap:Alcohol$@coordinates.pmwd4.mongodb.net/test', 
+        process.env.MONGODB_URI || 'mongodb+srv://bodilymap:Alcohol$@coordinates.pmwd4.mongodb.net/ParticipantData', 
         {
             useNewUrlParser: true,
             useUnifiedTopology: true

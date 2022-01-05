@@ -3,13 +3,12 @@
     width: 100%;
 }
 
-.BodilyMapCanvas__canvas {
-}
-
 .BodilyMapCanvas__humanImage {
     display: none;
 }
 
 .BodilyMapCanvas__button {
-
+    margin-left: 2.5%;
+    width: 95%;
+    height: 5vh;
 }
