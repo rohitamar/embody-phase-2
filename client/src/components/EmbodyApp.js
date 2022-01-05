@@ -23,7 +23,7 @@ class EmbodyApp extends React.Component {
                     <Router>
                         <Routes>
                             <Route path = "/" element = {<ParticipantScreen />} />
-                            <Route path = "/activation" element = {<BodilyMapCanvas />} />
+                            <Route path = "/activation"  element = {<BodilyMapCanvas />}/>
                         </Routes>
                     </Router>
                 </CookiesProvider>

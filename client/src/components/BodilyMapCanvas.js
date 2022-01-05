@@ -15,48 +15,48 @@ class BodilyMapCanvas extends React.Component {
      componentDidMount() {
           var arrX = [];
           var arrY = [];
-          
+
+          const { width, height } = this.getWindowDimensions();
           const canvas = this.canvasRef.current;
           const img = this.imageRef.current;
 
-          canvas.width = 900;
-          canvas.height = 1500;
+          canvas.width = width;
+          canvas.height = height;
           const ctx = canvas.getContext("2d");
 
           img.onload = () => {
-               ctx.drawImage(img, 0, 0, 900, 1500);
+               ctx.drawImage(img, 0, 0, width, height);
           }
-          
+
           var lastx, lasty, isDrawing;
-          var canvastop = canvas.offsetTop;
-          //setting presets for canvas context
           ctx.fillStyle = "red";
           ctx.strokeStyle = "red";
           ctx.lineWidth = 0;
           ctx.globalCompositeOperation = "source-over"; 
 
-          canvas.ontouchstart = function(event){        
-               ctx.globalAlpha = "0.4";            
-               event.preventDefault();                 
+          canvas.ontouchstart = function(event){                   
+               event.preventDefault();           
+               ctx.globalAlpha = "0.4";      
                isDrawing = true;
                lastx = event.touches[0].clientX;
-               lasty = event.touches[0].clientY - canvastop;
-             }
+               lasty = event.touches[0].clientY;
+          }
            
-             canvas.ontouchmove = function(event){                   
-               event.preventDefault();                 
+          canvas.ontouchmove = function(event){                   
+               event.preventDefault(); 
+               ctx.globalAlpha = "0.4";                
                if(!isDrawing) return;
                var newx = event.touches[0].clientX;
-               var newy = event.touches[0].clientY - canvastop;
-               console.log(newx);
-               console.log(newy);
-                 ctx.beginPath();
-                 ctx.arc(newx, newy, 10, false, Math.PI * 2, false);
-                 ctx.closePath();
-                 ctx.fill();
-                 ctx.stroke();
-         
-             }
+               var newy = event.touches[0].clientY;
+               arrX.push(parseInt(696 + (newx*170/900), 10));
+               arrY.push(parseInt(10 + (newy*521/1500), 10));
+               ctx.beginPath();
+               ctx.arc(newx+10, newy+10, 4, false, Math.PI * 2, false);
+               ctx.closePath();
+               ctx.fill();
+               ctx.stroke();
+          }
+          
      }
 
      getWindowDimensions() {
@@ -84,10 +84,8 @@ class BodilyMapCanvas extends React.Component {
      };
 
      render() {
-
-          const { width, height } = this.getWindowDimensions();
           return (
-               <div>
+               <div className = "BodilyMapCanvas">
                     <img className = "BodilyMapCanvas__humanImage" ref = {this.imageRef} src = {HumanImage} />
                     <canvas className = "BodilyMapCanvas__canvas" ref = {this.canvasRef} />
                     <button className = "BodilyMapCanvas__button">Next Bodily Map</button>
