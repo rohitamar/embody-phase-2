@@ -41,6 +41,7 @@ class BodilyMapCanvas extends React.Component {
           }
 
           var lastx, lasty, isDrawing;
+          
           //note that props.color can only be red or blue
           ctx.fillStyle = this.props.color;
           ctx.strokeStyle = this.props.color;
