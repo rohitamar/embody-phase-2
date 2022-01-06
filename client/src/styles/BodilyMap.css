@@ -10,6 +10,14 @@
     font-size: 1.5rem;
 }
 
+.BodilyMap__canvas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-left: .5rem;
+}
+
 .BodilyMapCanvas__header--bold {
     font-weight: bold;
 }
@@ -19,8 +27,7 @@
 }
 
 .BodilyMapCanvas__button {
-    display: inline-block;
-    margin-left: 2.5%;
-    width: 95%;
-    height: 5vh;
+    margin: 1rem 10%;
+    width: 80%;
+    height: 5vh
 }
