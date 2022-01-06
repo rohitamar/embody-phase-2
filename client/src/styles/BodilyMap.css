@@ -3,11 +3,23 @@
     width: 100%;
 }
 
+.BodilyMapCanvas__header {
+    font-weight: 100;
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.BodilyMapCanvas__header--bold {
+    font-weight: bold;
+}
+
 .BodilyMapCanvas__humanImage {
     display: none;
 }
 
 .BodilyMapCanvas__button {
+    display: inline-block;
     margin-left: 2.5%;
     width: 95%;
     height: 5vh;

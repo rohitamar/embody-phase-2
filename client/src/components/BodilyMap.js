@@ -19,13 +19,13 @@ class BodilyMapCanvas extends React.Component {
 
           const { width, height } = this.getWindowDimensions();
           const canvasDimensions = {
-               width: width,
-               height: 0.94*height
+               height: 0.84*height,
+               width: 0.84/3 * height
           };
            
           const imageDimensions = {
-               width: 0.9*width,
-               height: 0.94*height
+               height: 0.84*height,
+               width: 0.84/3*height,
           };
            
           const canvas = this.canvasRef.current;
@@ -37,7 +37,7 @@ class BodilyMapCanvas extends React.Component {
           const ctx = canvas.getContext("2d");
 
           img.onload = () => {
-               ctx.drawImage(img, 0.05*width, 0, imageDimensions.width, imageDimensions.height);
+               ctx.drawImage(img, 0, 0, imageDimensions.width, imageDimensions.height);
           }
 
           var lastx, lasty, isDrawing;
@@ -105,9 +105,10 @@ class BodilyMapCanvas extends React.Component {
      render() {
           return (
                <div className = "BodilyMapCanvas">
+                    <h1 className = "BodilyMapCanvas__header">Indicate where you feel <span className = "BodilyMapCanvas__header--bold">activation</span> now.</h1>
                     <img className = "BodilyMapCanvas__humanImage" ref = {this.imageRef} src = {HumanImage} />
                     <canvas className = "BodilyMapCanvas__canvas" ref = {this.canvasRef} />
-                    <button className = "BodilyMapCanvas__button">Next Bodily Map</button>
+                    <button className = "BodilyMapCanvas__button">Click Here When Finished</button>
                </div>
           );
      }
