@@ -3,6 +3,7 @@ import React from 'react';
 import ParticipantScreen from './ParticipantScreen.js';
 import BodilyMap from './BodilyMap.js';
 import InstructionScreen from './InstructionScreen.js';
+import ThankYouScreen from './ThankYouScreen.js';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 

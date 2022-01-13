@@ -1,6 +1,7 @@
-import { string } from 'prop-types';
 import React from 'react';
 import { useState, useEffect } from 'react';
+
+import { useNavigate } from "react-router";
 
 //human picture
 import HumanImage from '../images/human.png';
@@ -10,8 +11,15 @@ class BodilyMapCanvas extends React.Component {
           super(props);
           this.canvasRef = React.createRef();
           this.imageRef = React.createRef();
+
+          this.handleFinish = this.handleFinish.bind(this);
+          this.handleRefresh = this.handleRefresh.bind(this);
      }
 
+     componentDidUpdate(prevProps, prevState) {
+          this.handleRefresh();
+          console.log(this.props);
+     }
 
      componentDidMount() {
           var arrX = [];
@@ -102,6 +110,18 @@ class BodilyMapCanvas extends React.Component {
           return windowDimensions;
      };
 
+     handleFinish() {
+          if(this.props.color == "red") {
+               this.props.navigate('/deactivation');
+          } else {
+               this.props.navigate('/thankyou');
+          }
+     }
+
+     handleRefresh() {
+          window.location.reload();
+     }
+
      render() {
           return (
                <div className = "BodilyMapCanvas">
@@ -109,13 +129,8 @@ class BodilyMapCanvas extends React.Component {
                     <div className = "BodilyMap__canvas">
                          <canvas className = "BodilyMapCanvas__canvas" ref = {this.canvasRef} />
                          <div className = "BodilyMap__buttons">
-                              <NavLink 
-                                   className = "BodilyMapCanvas__button"
-                                   to = {this.props.color == "red" ? "/deactivation" : "/thankyou"}
-                              >
-                                   Click Here When Finished
-                              </NavLink>
-                              <button onClick = {() => {window.location.reload();}} className = "BodilyMapCanvas__button">Reset</button>
+                              <button onClick = {this.handleFinish} className = "BodilyMapCanvas__button">Click Here When Finished</button>
+                              <button onClick = {this.handleRefresh} className = "BodilyMapCanvas__button">Reset</button>
                          </div>
                     </div>
                     <h1 className = "BodilyMapCanvas__header">Indicate where you feel <span className = "BodilyMapCanvas__header--bold">activation</span> now.</h1>
@@ -124,4 +139,9 @@ class BodilyMapCanvas extends React.Component {
      }
 }
 
-export default BodilyMapCanvas;
+export default function(props) {
+     const navigation = useNavigate();
+ 
+     return <BodilyMapCanvas {...props} navigate = {navigation} />;
+ }
+ 
