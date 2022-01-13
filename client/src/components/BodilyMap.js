@@ -1,12 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-
 import { useNavigate } from "react-router";
-
-//human picture
 import HumanImage from '../images/human.png';
 
 class BodilyMapCanvas extends React.Component {
+
      constructor(props) {
           super(props);
           this.canvasRef = React.createRef();
@@ -133,7 +131,13 @@ class BodilyMapCanvas extends React.Component {
                               <button onClick = {this.handleRefresh} className = "BodilyMapCanvas__button">Reset</button>
                          </div>
                     </div>
-                    <h1 className = "BodilyMapCanvas__header">Indicate where you feel <span className = "BodilyMapCanvas__header--bold">activation</span> now.</h1>
+                    <h1 className = "BodilyMapCanvas__header">
+                         Indicate where you feel {
+                              this.props.color == "red" ? 
+                              <span className = "BodilyMapCanvas__header--bold">activation</span> :
+                              <span className = "BodilyMapCanvas__header--bold">deactivation</span>
+                         } now.
+                    </h1>
                </div>
           );
      }
