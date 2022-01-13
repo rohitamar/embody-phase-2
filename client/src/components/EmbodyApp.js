@@ -22,6 +22,7 @@ class EmbodyApp extends React.Component {
                         <Route path = "/instructions" element = {<InstructionScreen />} />
                         <Route path = "/activation"  element = {<BodilyMap color = "red"/>}/>
                         <Route path = "/deactivation" element = {<BodilyMap color = "blue" />}/>
+                        <Route path = "/thankyou" element = {<ThankYouScreen />} />
                     </Routes>
                 </Router>
             </CookiesProvider>

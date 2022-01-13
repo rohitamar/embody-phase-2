@@ -109,8 +109,13 @@ class BodilyMapCanvas extends React.Component {
                     <div className = "BodilyMap__canvas">
                          <canvas className = "BodilyMapCanvas__canvas" ref = {this.canvasRef} />
                          <div className = "BodilyMap__buttons">
-                              <button className = "BodilyMapCanvas__button">Click Here When Finished</button>
-                              <button className = "BodilyMapCanvas__button">Reset</button>
+                              <NavLink 
+                                   className = "BodilyMapCanvas__button"
+                                   to = {this.props.color == "red" ? "/deactivation" : "/thankyou"}
+                              >
+                                   Click Here When Finished
+                              </NavLink>
+                              <button onClick = {() => {window.location.reload();}} className = "BodilyMapCanvas__button">Reset</button>
                          </div>
                     </div>
                     <h1 className = "BodilyMapCanvas__header">Indicate where you feel <span className = "BodilyMapCanvas__header--bold">activation</span> now.</h1>
