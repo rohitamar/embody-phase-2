@@ -1,12 +1,16 @@
 import React from 'react';
 
+import { useNavigate } from "react-router";
+
 class ParticipantScreen extends React.Component {
     constructor(props) {
         super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     handleSubmit() {
-        
+        this.props.navigate('/instructions');
     }
 
     handleInputChange() {
@@ -38,4 +42,8 @@ class ParticipantScreen extends React.Component {
     }
 }
 
-export default ParticipantScreen;
+export default function(props) {
+    const navigation = useNavigate();
+
+    return <ParticipantScreen {...props} navigate = {navigation} />;
+}

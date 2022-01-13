@@ -1,5 +1,6 @@
 @import "./ParticipantScreen.css";
 @import "./BodilyMap.css";
+@import "./InstructionScreen.css";
 
 body {
     margin: 0px;

@@ -5,6 +5,7 @@ const router = express.Router();
 
 const bodyParser = require('body-parser').urlencoded({extended: true});
 
+
 router.get('/ping', async (req, res) => {
     return res.json({
         message: 'hello world!'
@@ -24,7 +25,8 @@ router.post('/addParticipant', bodyParser, async (req, res) => {
     const newParticipant = new Participant({
         participantID,
         coordXTrialOne,
-        coordYTrialOne
+        coordYTrialOne,
+        date: Date.now()
     });
 
     try {
