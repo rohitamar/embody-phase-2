@@ -31,6 +31,5 @@
   "proxy": "http://localhost:8080",
   "devDependencies": {
     "@types/react": "^17.0.38"
-  },
-  "type": "module"
+  }
 }
