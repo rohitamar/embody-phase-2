@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useNavigate } from "react-router";
+import { withCookies } from "react-cookie";
 
 class ParticipantScreen extends React.Component {
     constructor(props) {
@@ -42,8 +43,9 @@ class ParticipantScreen extends React.Component {
     }
 }
 
-export default function(props) {
+export default function App(props) {
     const navigation = useNavigate();
 
-    return <ParticipantScreen {...props} navigate = {navigation} />;
+    var App = <ParticipantScreen {...props} navigate = {navigation} />; 
+    return withCookies(App);
 }

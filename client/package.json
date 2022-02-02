@@ -14,7 +14,7 @@
     "redux-thunk": "^2.4.1"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -31,5 +31,6 @@
   "proxy": "http://localhost:8080",
   "devDependencies": {
     "@types/react": "^17.0.38"
-  }
+  },
+  "type": "module"
 }

@@ -4,10 +4,6 @@ import { NavLink } from "react-router-dom";
 
 class InstructionScreen extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className = "InstructionScreen__wrapper">
