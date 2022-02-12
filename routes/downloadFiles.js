@@ -1,12 +1,13 @@
 const express = require('express');
 const { isEmpty } = require('lodash');
+const Participant = require('../models/participant');
 const router = express.Router();
 const fs = require('fs');
 const { time } = require('console');
 const zip = require('express-easy-zip');
-const createCSVWriter = require('csv-writer').createObjectCsvWriter;
 
-const Participant = require('../models/participant');
+const bodyParser = require('body-parser').urlencoded({extended: true});
+const createCSVWriter = require('csv-writer').createObjectCsvWriter;
 
 router.use(zip());
 

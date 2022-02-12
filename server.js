@@ -9,7 +9,7 @@ const downloadRouter = require('./routes/downloadFiles');
 //const logRouter = require('./routes/log');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 8080;
 
 try {
     mongoose.connect( 
