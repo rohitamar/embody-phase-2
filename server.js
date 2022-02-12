@@ -3,10 +3,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const participantRouter = require('./routes/participant');
+//const participantRouter = require('./routes/participant');
 const downloadRouter = require('./routes/downloadFiles');
-const emailRouter = require('./routes/email');
-const logRouter = require('./routes/log');
+//const emailRouter = require('./routes/email');
+//const logRouter = require('./routes/log');
 
 const app = express();
 const PORT = 3000;
@@ -26,10 +26,10 @@ try {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/participant', participantRouter);
+//app.use('/participant', participantRouter);
 app.use('/download', downloadRouter);
-app.use('/email', emailRouter);
-app.use('/log', logRouter);
+//app.use('/email', emailRouter);
+//app.use('/log', logRouter);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
