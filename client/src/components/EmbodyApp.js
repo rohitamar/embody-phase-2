@@ -7,22 +7,18 @@ import ThankYouScreen from './ThankYouScreen.js';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { CookiesProvider } from 'react-cookie';
-
 class EmbodyApp extends React.Component {
     render() {
         return (
-            <CookiesProvider>
-                <Router>
-                    <Routes>
-                        <Route path = "/" element = {<ParticipantScreen />} />
-                        <Route path = "/instructions" element = {<InstructionScreen />} />
-                        <Route path = "/activation"  element = {<BodilyMap color = "red"/>}/>
-                        <Route path = "/deactivation" element = {<BodilyMap color = "blue" />}/>
-                        <Route path = "/thankyou" element = {<ThankYouScreen />} />
-                    </Routes>
-                </Router>
-            </CookiesProvider>
+            <Router>
+                <Routes>
+                    <Route path = "/" element = {<ParticipantScreen />} />
+                    <Route path = "/instructions" element = {<InstructionScreen />} />
+                    <Route path = "/activation"  element = {<BodilyMap color = "red"/>}/>
+                    <Route path = "/deactivation" element = {<BodilyMap color = "blue" />}/>
+                    <Route path = "/thankyou" element = {<ThankYouScreen />} />
+                </Routes>
+            </Router>
         );
     }
 }

@@ -3,10 +3,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const routes = require('./routes');
+const participantRouter = require('./routes/participant');
+const downloadRouter = require('./routes/downloadFiles');
+const emailRouter = require('./routes/email');
+const logRouter = require('./routes/log');
 
 const app = express();
-const PORT = process.env.PORT || 8080; 
+const PORT = 3000;
 
 try {
     mongoose.connect( 
@@ -22,7 +25,11 @@ try {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/', routes);
+
+app.use('/participant', participantRouter);
+app.use('/download', downloadRouter);
+app.use('/email', emailRouter);
+app.use('/log', logRouter);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
@@ -35,3 +42,4 @@ if (process.env.NODE_ENV === 'production') {
 app.listen(PORT, () => {
     console.log(`Server is starting at PORT: ${PORT}`);
 });
+

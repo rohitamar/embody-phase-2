@@ -1,13 +1,21 @@
+import { instanceOf } from 'prop-types';
 import React from 'react';
 
+import Cookies from 'universal-cookie';
+
 import { useNavigate } from "react-router";
-import { withCookies } from "react-cookie";
 
 class ParticipantScreen extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+
+        const cookies = new Cookies();
+
+        this.state = {
+            participantID: cookies.get('participantID') || -1
+        };
     }
 
     handleSubmit() {
@@ -30,6 +38,7 @@ class ParticipantScreen extends React.Component {
                         <label className = "ParticipantScreen__inputLabel">
                             Participant ID: 
                             <input 
+                                value = {this.state.participantID == -1 ? null : this.state.participantID}
                                 className = "ParticipantScreen__inputID" 
                                 type = "number" 
                                 onChange = {this.handleInputChange} 
@@ -46,6 +55,5 @@ class ParticipantScreen extends React.Component {
 export default function App(props) {
     const navigation = useNavigate();
 
-    var App = <ParticipantScreen {...props} navigate = {navigation} />; 
-    return withCookies(App);
+    return <ParticipantScreen {...props} navigate = {navigation} />; 
 }

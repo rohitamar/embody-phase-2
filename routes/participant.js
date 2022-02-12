@@ -5,14 +5,14 @@ const router = express.Router();
 
 const bodyParser = require('body-parser').urlencoded({extended: true});
 
-
 router.get('/ping', async (req, res) => {
     return res.json({
-        message: 'hello world!'
+        message: 'Server available',
+        statusCode: 200
     });
 });
 
-router.post('/addParticipant', bodyParser, async (req, res) => {
+router.post('/add', bodyParser, async (req, res) => {
     if (isEmpty(req.body)) {
         return res.status(403).json({
             error: 'Body cannot be empty. Invalid request.',
@@ -20,12 +20,13 @@ router.post('/addParticipant', bodyParser, async (req, res) => {
         });
     }
 
-    const { participantID, coordXTrialOne, coordYTrialOne } = req.body;
+    const { participantID, coordXArray, coordYArray } = req.body;
+
 
     const newParticipant = new Participant({
         participantID,
-        coordXTrialOne,
-        coordYTrialOne,
+        coordXArray,
+        coordYArray,
         date: Date.now()
     });
 
@@ -46,7 +47,7 @@ router.post('/addParticipant', bodyParser, async (req, res) => {
 });
 
 //Returns the id numbers and coordinates of every participant in the study
-router.post('/allParticipants', async (req, res) => {
+router.post('/getAll', async (req, res) => {
     try {
         const allParticipants = await Participant.find({});
         return res.json({

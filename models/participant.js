@@ -4,12 +4,11 @@ var ObjectID = require('mongodb').ObjectID;
 
 const ParticipantSchema = new Schema({
     participantID: Number,
-    coordX: Array,
-    coordY: Array,
+    coordXArray: Array,
+    coordYArray: Array,
     date: String
 });
 
 const Participant = mongoose.model('Participant', ParticipantSchema);
 
 module.exports = Participant;
-3

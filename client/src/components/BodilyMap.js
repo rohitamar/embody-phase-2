@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router";
+import { withCookies, Cookies } from "react-cookie";
 import HumanImage from '../images/human.png';
 
 class BodilyMapCanvas extends React.Component {
@@ -143,9 +144,11 @@ class BodilyMapCanvas extends React.Component {
      }
 }
 
-export default function(props) {
+export default function App(props) {
      const navigation = useNavigate();
- 
-     return <BodilyMapCanvas {...props} navigate = {navigation} />;
- }
+     return <BodilyMapCanvas {...props} navigate = {navigation} />; 
+}
+
+
+
  
