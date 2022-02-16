@@ -46,6 +46,15 @@ router.post('/add', bodyParser, async (req, res) => {
 
 });
 
+router.put('/update/:id', bodyParser, async (req, res) => {
+    if(isEmpty(req.body)) {
+        return res.status(403).json({
+            error: 'Body cannot be empty. Invalid request.',
+            statusCode: 403
+        });
+    }
+});
+
 //Returns the id numbers and coordinates of every participant in the study
 router.post('/getAll', async (req, res) => {
     try {

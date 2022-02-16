@@ -2,11 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectID = require('mongodb').ObjectID;
 
-const EventSchema = new Schema({
+const LogSchema = new Schema({
     participantID: Number,
-    date: String
+    dateEntered: String,
+    dateLeft: String
 });
 
-const Event = mongoose.model('Event', EventSchema);
+const Log = mongoose.model('Event', EventSchema);
 
-module.exports = Event;
+module.exports = Log;
