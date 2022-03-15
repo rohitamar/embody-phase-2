@@ -20,14 +20,14 @@ router.post('/add', bodyParser, async (req, res) => {
         });
     }
 
-    const { participantID, coordXArray, coordYArray } = req.body;
+    const { participantID, coordXArray, coordYArray, date } = req.body;
 
 
     const newParticipant = new Participant({
         participantID,
         coordXArray,
         coordYArray,
-        date: Date.now()
+        date
     });
 
     try {

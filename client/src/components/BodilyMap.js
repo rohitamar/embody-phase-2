@@ -150,13 +150,19 @@ class BodilyMapCanvas extends React.Component {
                coordXArray: this.state.arrX,
                coordYArray: this.state.arrY,
                date: dateLeft
+          }).then(res => {
+               console.log('hello world');
           });
-          
+
+          /*
           axios.post('https://bodily-maps.herokuapp.com/log/add', {
                participantID: ID,
                dateEntered: this.state.dateEntered,
                dateLeft: dateLeft
+          }).then(res => {
+               console.log('hello worldasjkdhakjshdjksad');  
           });
+          */
      }
 
      handleRefresh() {
