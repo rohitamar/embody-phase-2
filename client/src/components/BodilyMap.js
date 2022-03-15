@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router";
 import { withCookies, Cookies } from "react-cookie";
 import HumanImage from '../images/human.png';
+import axios from 'axios';
 
 class BodilyMapCanvas extends React.Component {
 
@@ -13,17 +14,14 @@ class BodilyMapCanvas extends React.Component {
 
           this.handleFinish = this.handleFinish.bind(this);
           this.handleRefresh = this.handleRefresh.bind(this);
-     }
-
-     componentDidUpdate(prevProps, prevState) {
-          this.handleRefresh();
-          console.log(this.props);
+          this.state = {
+               arrX: [],
+               arrY: []
+          };
      }
 
      componentDidMount() {
-          var arrX = [];
-          var arrY = [];
-
+          var arrX = [], arrY = [];
           const { width, height } = this.getWindowDimensions();
           const canvasDimensions = {
                height: 0.84*height,
@@ -64,7 +62,7 @@ class BodilyMapCanvas extends React.Component {
                lasty = event.touches[0].clientY;
           }
            
-          canvas.ontouchmove = function(event){                   
+          canvas.ontouchmove = (event) => {                   
                event.preventDefault(); 
                
                ctx.globalAlpha = "0.4";                
@@ -75,7 +73,12 @@ class BodilyMapCanvas extends React.Component {
                
                arrX.push(parseInt(696 + (newx * 170/imageDimensions.width), 10));
                arrY.push(parseInt(10 + (newy*521/imageDimensions.height), 10));
-               
+
+               this.setState({
+                    arrX,
+                    arrY
+               });
+
                ctx.beginPath();
                ctx.arc(newx+10, newy+10, 4, false, Math.PI * 2, false);
                ctx.closePath();
@@ -87,7 +90,6 @@ class BodilyMapCanvas extends React.Component {
 
      getWindowDimensions() {
           const { innerWidth: width, innerHeight: height } = window;
-     
           return {
                width,
                height
@@ -110,11 +112,19 @@ class BodilyMapCanvas extends React.Component {
      };
 
      handleFinish() {
-          if(this.props.color == "red") {
-               this.props.navigate('/deactivation');
-          } else {
-               this.props.navigate('/thankyou');
-          }
+          axios.post('https://bodilymaps.herokuapp.com/participant/add', { 
+               participantID: 101011,
+               coordXArray: this.state.arrX,
+               coordYArray: this.state.arrY,
+               date: Date.now()
+          }).then(res => {
+               console.log('request was fine');
+               if(this.props.color == "red") {
+                    this.props.navigate('/deactivation');
+               } else {
+                    this.props.navigate('/thankyou');
+               }
+          });
      }
 
      handleRefresh() {

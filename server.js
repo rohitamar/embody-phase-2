@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cors = require('cors');
 
 const participantRouter = require('./routes/participant');
 const downloadRouter = require('./routes/downloadFiles');
@@ -23,6 +24,7 @@ try {
     console.log(e);
 }
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
