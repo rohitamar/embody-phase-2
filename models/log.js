@@ -8,6 +8,6 @@ const LogSchema = new Schema({
     dateLeft: String
 });
 
-const Log = mongoose.model('Event', EventSchema);
+const Log = mongoose.model('Log', EventSchema);
 
 module.exports = Log;

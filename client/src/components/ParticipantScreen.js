@@ -10,20 +10,29 @@ class ParticipantScreen extends React.Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-
-        const cookies = new Cookies();
+        this.cookies = new Cookies();
+        this.participantIDExists = this.cookies.get("participantID") != undefined;
 
         this.state = {
-            participantID: cookies.get('participantID') || -1
+            participantID: this.participantIDExists ? this.cookies.get("participantID") : 0
         };
     }
 
     handleSubmit() {
-        this.props.navigate('/instructions');
+        if(this.state.participantID == 0) {
+            alert('Please enter a participant ID before submitting!');
+        } else {
+            this.cookies.set("participantID", this.state.participantID, { path: '/', maxAge: 2592000 });
+            this.props.navigate('/instructions');
+        }
     }
 
-    handleInputChange() {
-        
+    handleInputChange(event) {
+        if(!this.participantIDExists) {
+            this.setState({
+                participantID: event.target.value
+            });
+        }
     }
 
     render() {
@@ -38,7 +47,7 @@ class ParticipantScreen extends React.Component {
                         <label className = "ParticipantScreen__inputLabel">
                             Participant ID: 
                             <input 
-                                value = {this.state.participantID == -1 ? null : this.state.participantID}
+                                value = {this.state.participantID}
                                 className = "ParticipantScreen__inputID" 
                                 type = "number" 
                                 onChange = {this.handleInputChange} 

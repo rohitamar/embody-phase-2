@@ -1,59 +1,77 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router";
-import { withCookies, Cookies } from "react-cookie";
 import HumanImage from '../images/human.png';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 class BodilyMapCanvas extends React.Component {
 
      constructor(props) {
           super(props);
+          //React references created to build the canvas on the screen
           this.canvasRef = React.createRef();
           this.imageRef = React.createRef();
 
+          //this binding event handler functions
           this.handleFinish = this.handleFinish.bind(this);
           this.handleRefresh = this.handleRefresh.bind(this);
+          
+          //accessing browser cookies to obtain participantID 
+          this.cookies = new Cookies();
+
+          //initializing initial state values
           this.state = {
                arrX: [],
-               arrY: []
+               arrY: [],
+               dateEntered: 0
           };
      }
 
      componentDidMount() {
+          //we immediately log the dateEntered when the component mounts to the screen
+          this.setState({
+               dateEntered: Date.now()
+          });
+
           var arrX = [], arrY = [];
+
+          //We have taken a 1 to 3 ratio for height to width of the canvas itself
+          //Note that the aspect ratio of the image can be changed for convenience of filling data
+          //For example, it can be 0.84 * height and 0.84/4 * height (for a smaller aspect ratio) or a 0.84 * height and 0.84/2 * height (for a larger aspect ratio)
+          //This doesn't change data collection by too much as the coordinates of whatever size the image is are scaled appropriately to the one that MATLAB uses
+          //The MATLAB script uses a 170 x 521 sized canvas. Note that our canvas size is responsive and changes based on the phone screen width/height. 
+          //More comments on this have been made when the coordinates are being pushed into the array.
+
           const { width, height } = this.getWindowDimensions();
           const canvasDimensions = {
                height: 0.84*height,
                width: 0.84/3 * height
           };
-           
           const imageDimensions = {
                height: 0.84*height,
                width: 0.84/3*height,
           };
-           
+          
+          //make canvasRef current and imageRef current objects, set their dimensions appropriately, and then load the "human" image onto the canvas
           const canvas = this.canvasRef.current;
           const img = this.imageRef.current;
-
           canvas.width = canvasDimensions.width;
           canvas.height = canvasDimensions.height;
-
           const ctx = canvas.getContext("2d");
-
           img.onload = () => {
                ctx.drawImage(img, 0, 0, imageDimensions.width, imageDimensions.height);
           }
 
+
           var lastx, lasty, isDrawing;
-          
           //note that props.color can only be red or blue
+          //setting up the canvas with the color and linewidth
           ctx.fillStyle = this.props.color;
           ctx.strokeStyle = this.props.color;
-
           ctx.lineWidth = 0;
           ctx.globalCompositeOperation = "source-over"; 
-
+          
           canvas.ontouchstart = function(event){                   
                event.preventDefault();           
                ctx.globalAlpha = "0.4";      
@@ -64,15 +82,18 @@ class BodilyMapCanvas extends React.Component {
            
           canvas.ontouchmove = (event) => {                   
                event.preventDefault(); 
-               
                ctx.globalAlpha = "0.4";                
-               if(!isDrawing) return;
-               
+               if(!isDrawing) return;               
                var newx = event.touches[0].clientX;
                var newy = event.touches[0].clientY;
-               
-               arrX.push(parseInt(696 + (newx * 170/imageDimensions.width), 10));
-               arrY.push(parseInt(10 + (newy*521/imageDimensions.height), 10));
+
+               if(this.props.color == "red") {
+                    arrX.push(parseInt(33 + (newx * 170/imageDimensions.width)));
+                    arrY.push(parseInt(10 + (newy*521/imageDimensions.height), 10));
+               } else {
+                    arrX.push(parseInt(696 + (newx * 170/imageDimensions.width), 10));
+                    arrY.push(parseInt(10 + (newy*521/imageDimensions.height), 10));
+               }
 
                this.setState({
                     arrX,
@@ -87,6 +108,10 @@ class BodilyMapCanvas extends React.Component {
           }
           
      }
+
+     //The next two functions allow us to responsively change the canvas.
+     //It was a bit of a hassle to get the dimensions of the window.
+     //Note that the function useWindowDimensions uses React Hooks even though this component uses regular states just to isolate the window dimension collection process
 
      getWindowDimensions() {
           const { innerWidth: width, innerHeight: height } = window;
@@ -112,18 +137,25 @@ class BodilyMapCanvas extends React.Component {
      };
 
      handleFinish() {
-          axios.post('https://bodilymaps.herokuapp.com/participant/add', { 
-               participantID: 101011,
+          
+          let ID = this.cookies.get("participantID");
+          var dateLeft = Date.now();
+          //Note that we are only including the dateLeft on the participant coordinate data as the MATLAB scripts require this
+          //For consistency, we make this dateLeft equal on both the logger and the participant coordinate data
+          //Furthermore, note that this does assume that the participant finished at the moment that they pressed the submit button
+          //We do not take into consideration if they stopped before this, and waited to press submit
+          
+          axios.post('https://bodily-maps.herokuapp.com/participant/add', { 
+               participantID: ID,
                coordXArray: this.state.arrX,
                coordYArray: this.state.arrY,
-               date: Date.now()
-          }).then(res => {
-               console.log('request was fine');
-               if(this.props.color == "red") {
-                    this.props.navigate('/deactivation');
-               } else {
-                    this.props.navigate('/thankyou');
-               }
+               date: dateLeft
+          });
+          
+          axios.post('https://bodily-maps.herokuapp.com/log/add', {
+               participantID: ID,
+               dateEntered: this.state.dateEntered,
+               dateLeft: dateLeft
           });
      }
 

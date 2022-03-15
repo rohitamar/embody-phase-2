@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/participant', participantRouter);
 app.use('/download', downloadRouter);
 //app.use('/email', emailRouter);
-//app.use('/log', logRouter);
+app.use('/log', logRouter);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));

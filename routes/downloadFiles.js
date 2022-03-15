@@ -42,7 +42,7 @@ function buildCSVData(path, header, date, coordXArray, coordYArray)
     });
 } 
 
-router.get('/all', bodyParser, async (req, res) => {
+router.get('/dateRange', bodyParser, async (req, res) => {
     //Make folder named demo_subjects
     if(!fs.existsSync('./temporary')) {
         fs.mkdirSync('./temporary')
@@ -72,9 +72,7 @@ router.get('/all', bodyParser, async (req, res) => {
             if(!fs.existsSync(currDir)) {
                 fs.mkdirSync(currDir)
             }
-
             let participantPath = currDir + participant._id + '.csv'
-
             buildCSVData(participantPath, header, 10000, dataXArray[0], dataYArray[0])
 
         });
