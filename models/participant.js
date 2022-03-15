@@ -6,7 +6,7 @@ const ParticipantSchema = new Schema({
     participantID: Number,
     coordXArray: Array,
     coordYArray: Array,
-    date: String
+    date: Date
 });
 
 const Participant = mongoose.model('Participant', ParticipantSchema);

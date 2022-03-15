@@ -4,8 +4,8 @@ var ObjectID = require('mongodb').ObjectID;
 
 const LogSchema = new Schema({
     participantID: Number,
-    dateEntered: String,
-    dateLeft: String
+    dateEntered: Date,
+    dateLeft: Date
 });
 
 const Log = mongoose.model('Log', LogSchema);

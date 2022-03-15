@@ -4,6 +4,13 @@ const router = express.Router();
 const Log = require('../models/log');
 const bodyParser = require('body-parser').urlencoded({extended: true});
 
+router.get('/ping', async (req, res) => {
+    return res.json({
+        message: 'Server available',
+        statusCode: 200
+    });
+});
+
 router.post('/add', bodyParser, async (req, res) => {
     if (isEmpty(req.body)) {
         return res.status(403).json({
@@ -14,7 +21,7 @@ router.post('/add', bodyParser, async (req, res) => {
 
     const { participantID, dateEntered, dateLeft } = req.body;
 
-    const newLog = new Participant({
+    const newLog = new Log({
         participantID,
         dateEntered,
         dateLeft
