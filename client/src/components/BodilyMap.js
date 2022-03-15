@@ -137,32 +137,30 @@ class BodilyMapCanvas extends React.Component {
      };
 
      handleFinish() {
-          
           let ID = this.cookies.get("participantID");
           var dateLeft = Date.now();
           //Note that we are only including the dateLeft on the participant coordinate data as the MATLAB scripts require this
           //For consistency, we make this dateLeft equal on both the logger and the participant coordinate data
           //Furthermore, note that this does assume that the participant finished at the moment that they pressed the submit button
           //We do not take into consideration if they stopped before this, and waited to press submit
-          
           axios.post('https://bodily-maps.herokuapp.com/participant/add', { 
                participantID: ID,
                coordXArray: this.state.arrX,
                coordYArray: this.state.arrY,
                date: dateLeft
-          }).then(res => {
-               console.log('hello world');
           });
-
-          /*
           axios.post('https://bodily-maps.herokuapp.com/log/add', {
                participantID: ID,
                dateEntered: this.state.dateEntered,
-               dateLeft: dateLeft
+               dateLeft: dateLeft,
+               type: (this.props.color == "red" ? "ACTIVATION" : "DEACTIVATION")
           }).then(res => {
-               console.log('hello worldasjkdhakjshdjksad');  
+               if(this.props.color == "red") {
+                    this.props.navigate('/deactivation');
+               } else {
+                    this.props.navigate('/thankyou');
+               }
           });
-          */
      }
 
      handleRefresh() {
