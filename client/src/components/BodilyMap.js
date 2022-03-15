@@ -157,6 +157,7 @@ class BodilyMapCanvas extends React.Component {
           }).then(res => {
                if(this.props.color == "red") {
                     this.props.navigate('/deactivation');
+                    this.handleRefresh();
                } else {
                     this.props.navigate('/thankyou');
                }
