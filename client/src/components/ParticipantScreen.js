@@ -28,11 +28,9 @@ class ParticipantScreen extends React.Component {
     }
 
     handleInputChange(event) {
-        if(!this.participantIDExists) {
-            this.setState({
+        this.setState({
                 participantID: event.target.value
-            });
-        }
+        });
     }
 
     render() {

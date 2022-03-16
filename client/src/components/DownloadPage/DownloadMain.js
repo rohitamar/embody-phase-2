@@ -10,6 +10,8 @@ class DownloadMain extends React.Component {
 
         this.handleStartDateChange = this.handleStartDateChange.bind(this);
         this.handleEndDateChange = this.handleEndDateChange.bind(this);
+
+        alert('hello world');
     }
 
     handleStartDateChange(event) {
@@ -43,3 +45,5 @@ class DownloadMain extends React.Component {
         );
     }
 }
+
+export default DownloadMain;
