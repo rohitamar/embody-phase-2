@@ -19,13 +19,14 @@ router.post('/add', bodyParser, async (req, res) => {
         });
     }
 
-    const { participantID, dateEntered, dateLeft, type } = req.body;
+    const { participantID, dateEntered, dateLeft, type, sessionNumber } = req.body;
 
     const newLog = new Log({
         participantID,
         dateEntered,
         dateLeft, 
-        type
+        type,
+        sessionNumber
     });
 
     try {

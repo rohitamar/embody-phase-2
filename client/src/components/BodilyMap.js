@@ -138,6 +138,8 @@ class BodilyMapCanvas extends React.Component {
 
      handleFinish() {
           let ID = this.cookies.get("participantID");
+          let sessionNumber = this.cookies.get("sessionNumber");
+
           var dateLeft = Date.now();
           //Note that we are only including the dateLeft on the participant coordinate data as the MATLAB scripts require this
           //For consistency, we make this dateLeft equal on both the logger and the participant coordinate data
@@ -153,7 +155,8 @@ class BodilyMapCanvas extends React.Component {
                participantID: ID,
                dateEntered: this.state.dateEntered,
                dateLeft: dateLeft,
-               type: (this.props.color == "red" ? "ACTIVATION" : "DEACTIVATION")
+               type: (this.props.color == "red" ? "ACTIVATION" : "DEACTIVATION"),
+               sessionNumber
           }).then(res => {
                if(this.props.color == "red") {
                     this.props.navigate('/deactivation');

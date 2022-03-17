@@ -1,6 +1,7 @@
 const express = require('express');
 const { isEmpty } = require('lodash');
 const Participant = require('../models/participant');
+const Log = require('../models/log');
 const router = express.Router();
 const fs = require('fs');
 const { time } = require('console');
@@ -14,26 +15,40 @@ router.use(zip());
 //Header of the CSV file
 //Can be changed depending on how you want the CSV file to be organized
 //In this case, time, coordX, and coordY are the columns of the CSV file
-const header = [
+const headerParticipant = [
     { id: 'date', title: 'date' },
     { id: 'coordX', title: 'coordX' },
     { id: 'coordY', title: 'coordY' }
 ]
 
+const headerLog = [
+    { id: 'fileName', title: 'File Name' },
+    { id: 'participantID', title: 'ParticipantID' },
+    { id: 'dateParticipant', title: 'Date of Study' },
+    { id: 'timeEnteredActivation', title: 'Activation - Time Entered' }, 
+    { id: 'timeLeftActivation', title: 'Activation - Time Left' },
+    { id: 'timeEnteredDeactivation', title: 'Deactivation - Time Entered' },
+    { id: 'timeLeftDeactivation', title: 'Deactivation - Time Left' }
+]
+
 //This function builds an array of JS objects that can be passed into the csvWriter library
 //to quickly create CSV files
-function buildCSVData(path, header, date, coordXArray, coordYArray)
+function buildMasterLogCSVData(path, header = headerLog, fileNames, participantIds, datesParticipant, timesEnteredActivation, timesEnteredDeactivation, timesLeftActivation, timesLeftDeactivation)
 {
     const csvWriter = createCSVWriter({
         path,
         header,
     });
     dataCSV = []
-    for(var i = 0; i<coordXArray.length; i++) {
+    for(var i = 0; i<fileNames.length; i++) {
         let row = {
-            date: date,
-            coordX: coordXArray[i],
-            coordY: coordYArray[i]
+            fileName: fileNames[i],
+            participantID: participantIds[i],
+            dateParticipant: datesParticipant[i],
+            timeEnteredActivation: timesEnteredActivation[i],
+            timeEnteredDeactivation: timesEnteredDeactivation[i],
+            timeLeftActivation: timesLeftActivation[i],
+            timeLeftDeactivation: timesLeftDeactivation[i]
         }
         dataCSV.push(row);
     }
@@ -41,6 +56,15 @@ function buildCSVData(path, header, date, coordXArray, coordYArray)
         console.log('hello world');
     });
 } 
+
+function getTime(time) {
+    return (time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
+}
+
+function getDate(time) {
+    return time.getFullYear() + '-' + (time.getMonth() - 1) + '-' + time.getDate();
+}
+
 
 router.get('/dateRange', bodyParser, async (req, res) => {
     //Make folder named demo_subjects
@@ -84,6 +108,83 @@ router.get('/dateRange', bodyParser, async (req, res) => {
             name: 'Package'
         }],
         filename: 'Package.zip'
+    });
+});
+
+router.get('/createMasterLog', bodyParser, async (req, res) => {
+    Log.aggregate([
+        {
+            $sort: {
+                participantID: 1, 
+            }
+        },
+        {
+            $group: {
+                _id: {
+                    participantID: "$participantID",
+                    sessionNumber: "$sessionNumber",
+                },
+                entered: {
+                    $push: "$dateEntered"
+                },
+                left: {
+                    $push: "$dateLeft"
+                }
+            }
+        }
+    ]).then((logs) => {
+        if(!fs.existsSync('./MASTERLOG')) {
+            fs.mkdirSync('./MASTERLOG')
+        }
+
+        let participantIds = [], fileNames = [];
+        let datesParticipant = [];
+        let timesEnteredActivation = [], timesEnteredDeactivation = [], timesLeftActivation = [], timesLeftDeactivation = [];
+        
+        logs.forEach((log) => {
+            let { _id, entered, left } = log;
+
+            let dateParticipant = getDate(left[0]);
+            datesParticipant.push(dateParticipant);
+
+            let timeEnteredActivation = getTime(entered[0]);
+            timesEnteredActivation.push(timeEnteredActivation);
+
+            let timeEnteredDeactivation = getTime(entered[1]);
+            timesEnteredDeactivation.push(timeEnteredDeactivation);
+
+            let timeLeftActivation = getTime(left[0]);
+            timesLeftActivation.push(timeLeftActivation);
+
+            let timeLeftDeactivation = getTime(left[1]);
+            timesLeftDeactivation.push(timeLeftDeactivation);
+
+            participantIds.push(_id.participantID);
+            
+            let fileName = _id.participantID + '__' + _id.sessionNumber + '__' + dateParticipant;
+            fileNames.push(fileName);
+
+        });
+
+        buildMasterLogCSVData('./MASTERLOG/MasterLog.csv', 
+            headerLog, 
+            fileNames, 
+            participantIds, 
+            datesParticipant, 
+            timesEnteredActivation, 
+            timesEnteredDeactivation, 
+            timesLeftActivation, 
+            timesLeftDeactivation
+        )
+
+        await res.zip({
+            files: [{
+                path: './MASTERLOG',
+                name: 'MASTERLOG'
+            }],
+            filename: 'MASTERLOG.zip'
+        });
+
     });
 });
 

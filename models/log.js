@@ -6,7 +6,8 @@ const LogSchema = new Schema({
     participantID: Number,
     dateEntered: Date,
     dateLeft: Date,
-    type: String
+    type: String,
+    sessionNumber: Number
 });
 
 const Log = mongoose.model('Log', LogSchema);
