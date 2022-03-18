@@ -8,7 +8,7 @@ const LogSchema = new Schema({
     dateLeft: Date,
     type: String,
     sessionNumber: Number,
-    dataValidity, String
+    dataValidity: String
 });
 
 const Log = mongoose.model('Log', LogSchema);
