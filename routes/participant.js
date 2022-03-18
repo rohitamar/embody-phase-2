@@ -17,8 +17,8 @@ router.use(bodyParser.json({
     limit: '50mb'
 }));
 
-const AWS_ACCESS_KEY_ID = 'AKIA43TAELT6XCCTV4F2';
-const AWS_SECRET_ACCESS_KEY = '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';
+const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
+const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
 
 const s3 = new AWS.S3({
     accessKeyId: AWS_ACCESS_KEY_ID,
