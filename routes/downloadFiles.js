@@ -11,6 +11,7 @@ const AWS = require('aws-sdk');
 const bodyParser = require('body-parser').urlencoded({extended: true});
 const createCSVWriter = require('csv-writer').createObjectCsvWriter;
 
+
 const AWS_ACCESS_KEY_ID = 'AKIA43TAELT6XCCTV4F2';
 const AWS_SECRET_ACCESS_KEY = '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';
 
@@ -21,7 +22,6 @@ const s3 = new AWS.S3({
 
 
 router.use(zip());
-
 //Header of the CSV file
 //Can be changed depending on how you want the CSV file to be organized
 //In this case, time, coordX, and coordY are the columns of the CSV file

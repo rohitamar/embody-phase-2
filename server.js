@@ -24,9 +24,16 @@ try {
 }
 
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 1000000000}));
+app.use(express.json({ 
+    limit: '200mb',
+    extended: true
+}));
+
+app.use(express.urlencoded({
+    limit: '200mb', 
+    extended: true, 
+    parameterLimit: 1000000000
+}));
 
 app.use('/participant', participantRouter);
 app.use('/download', downloadRouter);

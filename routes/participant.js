@@ -5,7 +5,17 @@ const AWS = require('aws-sdk');
 const Participant = require('../models/participant');
 const router = express.Router();
 
-const bodyParser = require('body-parser').urlencoded({extended: true});
+const bodyParser = require('body-parser');
+
+router.use(bodyParser.urlencoded({
+    limit: '50mb',
+    extended: false,
+    parameterLimit: 50000
+}));
+
+router.use(bodyParser.json({
+    limit: '50mb'
+}));
 
 const AWS_ACCESS_KEY_ID = 'AKIA43TAELT6XCCTV4F2';
 const AWS_SECRET_ACCESS_KEY = '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';
@@ -22,7 +32,7 @@ router.get('/ping', async (req, res) => {
     });
 });
 
-router.post('/add', bodyParser, async (req, res) => {
+router.post('/add', async (req, res) => {
     if (isEmpty(req.body)) {
         return res.status(403).json({
             error: 'Body cannot be empty. Invalid request.',
@@ -56,12 +66,14 @@ router.post('/add', bodyParser, async (req, res) => {
 
 });
 
-router.post('/pushBodilyMap', bodyParser, (req, res) => {
+router.post('/pushBodilyMap', (req, res) => {
+    console.log(req);
     const params = {
         Bucket: 'bodilysensationimages',
         Key: req.body.participantImagePath,
         Body: req.body.participantImageData,
     };
+
 
     s3.putObject(params, (s3err, data) => {
         if(s3err) throw s3err;
@@ -70,7 +82,7 @@ router.post('/pushBodilyMap', bodyParser, (req, res) => {
 
 });
 
-router.put('/update/:id', bodyParser, async (req, res) => {
+router.put('/update/:id', async (req, res) => {
     if(isEmpty(req.body)) {
         return res.status(403).json({
             error: 'Body cannot be empty. Invalid request.',

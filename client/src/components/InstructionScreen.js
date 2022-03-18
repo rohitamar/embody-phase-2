@@ -8,6 +8,11 @@ class InstructionScreen extends React.Component {
         super(props);
         this.cookies = new Cookies();
         this.priorActivationExists = this.cookies.get("dateEnteredActivation");
+        this.priorDeactivationExists = this.cookies.get("dateEnteredDeactivation");
+
+        if(this.priorActivationExists && this.priorDeactivationExists) {
+            this.priorActivationExists = false;
+        }
     }
 
     render() {
