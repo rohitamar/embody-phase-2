@@ -22,17 +22,13 @@ class DownloadMain extends React.Component {
     //differenceBetweenActivationAndDeactivationPerhaps, in a more robust and secure system, you would want to look into React Authentication Routing (with React-Router)
     //Our system didn't need to be this complex, so I just use the prompt and ask for the password
 
-    shouldComponentUpdate(prevState, prevProps) {
-        return this.authentication;
-    }
-
     promptPassword() {
         var promptedPassword = window.prompt("Enter password: ");
-
         if(promptedPassword == 'rohitamarnath') {
-            this.setState({
+            this.setState((prevState) => ({
+                ...prevState,
                 authentication: true
-            });
+            }));
         }
     }
 
@@ -53,8 +49,7 @@ class DownloadMain extends React.Component {
     }
 
     render() {
-        const auth = this.state.authentication;
-        if(!this.authentication) {
+        if(!this.state.authentication) {
             return (
                 <div>
                     <b>Invalid Authentication.</b>
