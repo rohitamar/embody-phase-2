@@ -1,9 +1,19 @@
 const express = require('express');
 const { isEmpty } = require('lodash');
+const AWS = require('aws-sdk');
+
 const Participant = require('../models/participant');
 const router = express.Router();
 
 const bodyParser = require('body-parser').urlencoded({extended: true});
+
+const AWS_ACCESS_KEY_ID = 'AKIA43TAELT6XCCTV4F2';
+const AWS_SECRET_ACCESS_KEY = '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';
+
+const s3 = new AWS.S3({
+    accessKeyId: AWS_ACCESS_KEY_ID,
+    secretAccessKey: AWS_SECRET_ACCESS_KEY
+});
 
 router.get('/ping', async (req, res) => {
     return res.json({
@@ -43,6 +53,20 @@ router.post('/add', bodyParser, async (req, res) => {
             statusCode: 500
         });
     }
+
+});
+
+router.post('/pushBodilyMap', bodyParser, (req, res) => {
+    const params = {
+        Bucket: 'bodilysensationimages',
+        Key: req.body.participantImagePath,
+        Body: req.body.participantImageData,
+    };
+
+    s3.putObject(params, (s3err, data) => {
+        if(s3err) throw s3err;
+        console.log(data);
+    });
 
 });
 

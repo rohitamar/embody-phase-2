@@ -1,8 +1,14 @@
 import React from 'react';
-
+import Cookies from 'universal-cookie';
 import { NavLink } from "react-router-dom";
 
 class InstructionScreen extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.cookies = new Cookies();
+        this.priorActivationExists = this.cookies.get("dateEnteredActivation");
+    }
 
     render() {
         return (
@@ -12,7 +18,7 @@ class InstructionScreen extends React.Component {
                 </div>
                 <NavLink 
                     className = "InstructionScreen__button"
-                    to = "/activation"
+                    to = {this.priorActivationExists ? "/deactivation" : "/activation"}
                     exact
                 >
                     Proceed

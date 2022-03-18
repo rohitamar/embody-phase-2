@@ -29,10 +29,25 @@ class BodilyMapCanvas extends React.Component {
      }
 
      componentDidMount() {
+
+          const TIME_COOKIE = 2592000;
+          const PATH_COOKIE = '/';
+
+          const COOKIE_SETTINGS = {
+               path: PATH_COOKIE,
+               maxAge: TIME_COOKIE
+          };
+
           //we immediately log the dateEntered when the component mounts to the screen
           this.setState({
                dateEntered: Date.now()
           });
+
+          if(this.props.color == "red") {
+               this.cookies.set("dateEnteredActivation", this.state.dateEntered.toString(), COOKIE_SETTINGS);
+          } else {
+               this.cookies.set("dateEnteredDeactivation", this.state.dateEntered.toString(), COOKIE_SETTINGS);
+          }
 
           var arrX = [], arrY = [];
 
@@ -120,6 +135,11 @@ class BodilyMapCanvas extends React.Component {
                height
           };
      }
+
+     getTimeDifference(date1, date2) {
+          const diff = Math.abs(date2 - date1);
+          return Math.ceil(diff/(1000 * 60 * 60));
+     }
         
      useWindowDimensions = () => {
           const [windowDimensions, setWindowDimensions] = useState(this.getWindowDimensions());
@@ -137,26 +157,63 @@ class BodilyMapCanvas extends React.Component {
      };
 
      handleFinish() {
+          const TIME_COOKIE = 2592000;
+          const PATH_COOKIE = '/';
+
+          const COOKIE_SETTINGS = {
+               path: PATH_COOKIE,
+               maxAge: TIME_COOKIE
+          };
+
           let ID = this.cookies.get("participantID");
           let sessionNumber = this.cookies.get("sessionNumber");
 
           var dateLeft = Date.now();
+
+          let differenceActivation = false;
+          let differenceBetweenActivationAndDeactivation = false;
+
           //Note that we are only including the dateLeft on the participant coordinate data as the MATLAB scripts require this
           //For consistency, we make this dateLeft equal on both the logger and the participant coordinate data
           //Furthermore, note that this does assume that the participant finished at the moment that they pressed the submit button
           //We do not take into consideration if they stopped before this, and waited to press submit
+          if(this.props.color == "red") {
+               this.cookies.set("dateLeftActivation", dateLeft.toString(), COOKIE_SETTINGS);
+          } else {
+               this.cookies.set("dateLeftDeactivation", dateLeft.toString(), COOKIE_SETTINGS);
+               let dateLeftActivation = this.cookies.get("dateLeftActivation");
+               differenceBetweenActivationAndDeactivation = this.getTimeDifference(this.state.dateEntered, dateLeftActivation) >= 60;
+          }
+
+          differenceActivation = this.getTimeDifference(dateLeft, this.state.dateEntered) >= 60;
+
+          if(differenceActivation || differenceBetweenActivationAndDeactivation) {
+               let tempSessionNum = this.cookies.get("sessionNumber");
+               this.cookies.set("sessionNumber", tempSessionNum, COOKIE_SETTINGS);
+               this.cookies.set("repetition", 2, COOKIE_SETTINGS);
+          }
+
           axios.post('https://bodily-maps.herokuapp.com/participant/add', { 
                participantID: ID,
                coordXArray: this.state.arrX,
                coordYArray: this.state.arrY,
                date: dateLeft
           });
+
+          const canvas = this.canvasRef.current;
+          var participantImageData = canvas.toDataURL();
+
+          axios.post('https://bodily-maps.herokuapp.com/participant/pushBodilyImage', {
+               participantImageData
+          });
+
           axios.post('https://bodily-maps.herokuapp.com/log/add', {
                participantID: ID,
                dateEntered: this.state.dateEntered,
                dateLeft: dateLeft,
                type: (this.props.color == "red" ? "ACTIVATION" : "DEACTIVATION"),
-               sessionNumber
+               sessionNumber,
+               dataValidity: (differenceActivation || differenceBetweenActivationAndDeactivation) ? "NOT VALID" : "VALID"
           }).then(res => {
                if(this.props.color == "red") {
                     this.props.navigate('/deactivation');
@@ -165,6 +222,7 @@ class BodilyMapCanvas extends React.Component {
                     this.props.navigate('/thankyou');
                }
           });
+          
      }
 
      handleRefresh() {

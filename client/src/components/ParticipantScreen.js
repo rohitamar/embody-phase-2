@@ -12,24 +12,52 @@ class ParticipantScreen extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.cookies = new Cookies();
         this.participantIDExists = this.cookies.get("participantID") != undefined;
-
         this.state = {
-            participantID: this.participantIDExists ? this.cookies.get("participantID") : 0
+            participantID: this.participantIDExists ? this.cookies.get("participantID") : 0,
+            sessionNumber: this.participantIDExists ? Number(this.cookies.get("sessionNumber")) + 1 : 1
         };
     }
 
     handleSubmit() {
+        
+        //Settings for the cookies we are using
+        //These can be changed if you want the cookie to exist for longer
+        //The one that I have used lasts for 1 month and 1 week
+        //Essentially, you want TIME_COOKIE to be the duration of your experiment, so it'll vary from one experiment to the next
+
+        const TIME_COOKIE = 2592000;
+        const PATH_COOKIE = '/';
+
+        const COOKIE_SETTINGS = {
+            path: PATH_COOKIE,
+            maxAge: TIME_COOKIE
+        };
+
         if(this.state.participantID == 0) {
             alert('Please enter a participant ID before submitting!');
         } else {
-            this.cookies.set("participantID", this.state.participantID, { path: '/', maxAge: 2592000 });
+            //Note that the participantID may not be the same as cookie. 
+            //In most cases, this.state.participantID will equal the cookies' participantID
+            //But, we still need to let the user override the cookie setting the input
+            //In the cases where the user has overrode this setting, the cookie's participantID needs to be changed
+            //and the session number needs to go back to 1
+            if(this.cookies.get("participantID") != this.state.participantID) {
+                this.cookies.set("sessionNumber", 1, COOKIE_SETTINGS);
+            } else {
+                this.cookies.set("sessionNumber", this.state.sessionNumber, COOKIE_SETTINGS);
+            }
+
+            //We always will just need to set whatever inputted participantID as the cookie's value
+            this.cookies.set("participantID", this.state.participantID, COOKIE_SETTINGS);
+            
+            //Use Navigate from React-Router to manually route to the instructions page
             this.props.navigate('/instructions');
         }
     }
 
     handleInputChange(event) {
         this.setState({
-                participantID: event.target.value
+            participantID: event.target.value
         });
     }
 
