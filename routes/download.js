@@ -184,16 +184,16 @@ router.get('/createMasterLog', bodyParser, async (req, res) => {
             let dateParticipant = getDate(left[0]);
             datesParticipant.push(dateParticipant);
 
-            let timeEnteredActivation = getTime(entered[0]);
+            let timeEnteredActivation = getTime(entered[0]) || 0;
             timesEnteredActivation.push(timeEnteredActivation);
 
-            let timeEnteredDeactivation = getTime(entered[1]);
+            let timeEnteredDeactivation = getTime(entered[1]) || 0;
             timesEnteredDeactivation.push(timeEnteredDeactivation);
 
-            let timeLeftActivation = getTime(left[0]);
+            let timeLeftActivation = getTime(left[0]) || 0;
             timesLeftActivation.push(timeLeftActivation);
 
-            let timeLeftDeactivation = getTime(left[1]);
+            let timeLeftDeactivation = getTime(left[1]) || 0;
             timesLeftDeactivation.push(timeLeftDeactivation);
 
             participantIds.push(_id.participantID);
