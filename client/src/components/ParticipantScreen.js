@@ -33,7 +33,7 @@ class ParticipantScreen extends React.Component {
         };
 
         if(this.state.participantID == 0) {
-            alert('Please enter a participant ID before submitting!');
+            alert('Please enter a participant ID before submitting.');
         } else {
             axios.get('https://bodily-maps.herokuapp.com/participant/find', {
                 params: {
