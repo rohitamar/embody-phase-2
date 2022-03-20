@@ -20,8 +20,7 @@ try {
             useUnifiedTopology: true,
             useNewUrlParser: true,
             useFindAndModify: true,
-            useCreateIndex: true,
-            useUnifiedToplogy: true
+            useCreateIndex: true
         }
     );
 } catch(e) {

@@ -35,21 +35,13 @@ class ParticipantScreen extends React.Component {
         if(this.state.participantID == 0) {
             alert('Please enter a participant ID before submitting!');
         } else {
-            axios.get('https://bodily-maps.herokuapp.com/participant/find', {
-                params: {
-                    id: this.state.participantID
-                }
-            }).then((res) => {
+            axios.get('https://bodily-maps.herokuapp.com/participant/find' + this.state.participantID)
+            .then((res) => {
                 if(res) {
                     this.cookies.set("sessionNumber", res.sessionNumber + 1, COOKIE_SETTINGS);
-                    axios.put('https://bodily-maps.herokuapp.com/participant/update', {
-                        params: {
-                            id: this.state.participantID,
-                            sessNum: res.sessionNumber + 1
-                        }
-                    });
+                    let sessNum = res.sessionNumber + 1
+                    axios.put('https://bodily-maps.herokuapp.com/participant/update/' + this.state.participantID + '/' + sessNum);
                 } else {
-                    
                     axios.post('https://bodily-maps.herokuapp.com/participant/add', {
                         participantID: this.state.participantID,
                         sessionNumber: 1
