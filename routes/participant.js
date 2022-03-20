@@ -43,6 +43,7 @@ router.get('/find', async (req, res) => {
 });
 
 router.put('/update', async (req, res) => {
+    console.log(req.query);
     await Participant.findOneAndUpdate({
         participantID: Number(req.query.id)
     }, {
