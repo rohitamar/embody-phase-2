@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 8080;
 
 try {
     mongoose.connect( 
-        process.env.MONGODB_URI,
+        process.env.MONGODB_URI || 'mongodb+srv://bodilymap:Alcohol%24@coordinates.pmwd4.mongodb.net/test?authSource=admin&replicaSet=atlas-fpn2ab-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true',
         {
             useNewUrlParser: true,
             useUnifiedTopology: true
@@ -33,6 +33,7 @@ app.use(express.urlencoded({
     limit: '200mb', 
     extended: true, 
     parameterLimit: 1000000000
+
 }));
 
 app.use('/participant', participantRouter);

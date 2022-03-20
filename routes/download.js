@@ -133,6 +133,9 @@ router.get('/dateRange', bodyParser, async (req, res) => {
             buildCSVData(participantPath, headerParticipant, participant.date[0].getTime(), dataXArray[0], dataYArray[0])
         });
 
+        let dateNow = Date.now();
+
+        //console.log(dateNow);
         await res.zip({
             files: [{
                 path: './participantdata',
