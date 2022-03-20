@@ -208,7 +208,6 @@ class BodilyMapCanvas extends React.Component {
 
           const canvas = this.canvasRef.current;
           var participantImageData = canvas.toDataURL();
-          console.log(participantImageData);
 
           axios.post('https://bodily-maps.herokuapp.com/participant/pushBodilyMap', {
                participantImagePath: sessionNumber + '__' + ID + '__' + dateLeft.toString(),

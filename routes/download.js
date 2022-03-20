@@ -137,7 +137,7 @@ router.get('/dateRange', bodyParser, async (req, res) => {
             }
 
             console.log()
-            let participantPath = currDir + participant._id.participantID + '__' + participant._id.sessionNumber + '__' + getDate(participant.date[0]).toString()+ '.csv'
+            let participantPath = currDir + participant._id.participantID + '__' + participant._id.sessionNumber + '__' + getDate(participant.date[0]).toString() + '__' + getTime(participant.date[0]).toString() + '.csv'
             dataXArray = dataXArray.flat();
             dataYArray = dataYArray.flat();
 
