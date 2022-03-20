@@ -86,11 +86,17 @@ function buildCSVData(path, header, date, coordXArray, coordYArray)
 } 
 
 function getTime(time) {
-    return (time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
+    if(time)
+        return (time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
+    else
+        return 0;
 }
 
 function getDate(time) {
-    return time.getFullYear() + '-' + (time.getMonth() - 1) + '-' + time.getDate();
+    if(time)
+        return time.getFullYear() + '-' + (time.getMonth() - 1) + '-' + time.getDate();
+    else
+        return 0;
 }
 
 router.get('/dateRange', bodyParser, async (req, res) => {
