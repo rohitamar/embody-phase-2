@@ -7,7 +7,6 @@ class InstructionScreen extends React.Component {
     constructor(props) {
         super(props);
         this.cookies = new Cookies();
-        this.priorActivationExists = this.cookies.get("dateEnteredActivation") != "NO DATE";
     }
 
     render() {
@@ -18,7 +17,7 @@ class InstructionScreen extends React.Component {
                 </div>
                 <NavLink 
                     className = "InstructionScreen__button"
-                    to = {this.priorActivationExists ? "/deactivation" : "/activation"}
+                    to = {"/activation"}
                     exact
                 >
                     Proceed

@@ -11,10 +11,10 @@ class ParticipantScreen extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.cookies = new Cookies();
-        this.participantIDExists = this.cookies.get("participantID") != undefined;
+        
         this.state = {
-            participantID: this.participantIDExists ? this.cookies.get("participantID") : 0,
-            sessionNumber: this.participantIDExists ? Number(this.cookies.get("sessionNumber")) + 1 : 1
+            participantID: this.cookies.get("participantID") || 0,
+            sessionNumber: this.cookies.get("sessionNumber") ? Number(this.cookies.get("sessionNumber")) + 1 : 1
         };
     }
 
@@ -43,6 +43,10 @@ class ParticipantScreen extends React.Component {
             //and the session number needs to go back to 1
             if(this.cookies.get("participantID") != this.state.participantID) {
                 this.cookies.set("sessionNumber", 1, COOKIE_SETTINGS);
+                this.cookies.set("dateEnteredActivation", "NO DATE", COOKIE_SETTINGS);
+                this.cookies.set("dateLeftActivation", "NO DATE", COOKIE_SETTINGS);
+                this.cookies.set("dateLeftDeactivation", "NO DATE", COOKIE_SETTINGS);
+                this.cookies.set("dateLeftDeactivation", "NO DATE", COOKIE_SETTINGS);
             } else {
                 this.cookies.set("sessionNumber", this.state.sessionNumber, COOKIE_SETTINGS);
             }
