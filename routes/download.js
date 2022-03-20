@@ -135,8 +135,13 @@ router.get('/dateRange', bodyParser, async (req, res) => {
             if(!fs.existsSync(currDir)) {
                 fs.mkdirSync(currDir)
             }
+
+            console.log()
             let participantPath = currDir + participant._id.participantID + '__' + participant._id.sessionNumber + '__' + getDate(participant.date[0]).toString()+ '.csv'
-            buildCSVData(participantPath, headerParticipant, participant.date[0].getTime(), dataXArray[0], dataYArray[0])
+            dataXArray = dataXArray.flat();
+            dataYArray = dataYArray.flat();
+
+            buildCSVData(participantPath, headerParticipant, participant.date[0].getTime(), dataXArray, dataYArray)
         });
 
         let dateNow = Date.now();
@@ -185,6 +190,9 @@ router.get('/createMasterLog', bodyParser, async (req, res) => {
         let timesEnteredActivation = [], timesEnteredDeactivation = [], timesLeftActivation = [], timesLeftDeactivation = [];
         
         logs.forEach((log) => {
+            //(the month of the date is wrong) 
+            //the time is in UTC
+            //add difference between activations and deactivations
             let { _id, entered, left } = log;
 
             let dateParticipant = getDate(left[0]);
