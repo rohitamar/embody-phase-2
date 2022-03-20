@@ -37,6 +37,7 @@ class ParticipantScreen extends React.Component {
         } else {
             axios.get('https://bodily-maps.herokuapp.com/participant/find' + this.state.participantID)
             .then((res) => {
+                console.log(res);
                 if(res != null) {
                     this.cookies.set("sessionNumber", res.sessionNumber + 1, COOKIE_SETTINGS);
                     let sessNum = res.sessionNumber + 1
