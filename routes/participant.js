@@ -37,14 +37,14 @@ router.post('/add', async (req, res) => {
 
 router.get('/find:id', async (req, res) => {
     const query = await Participant.findOne({
-        participantID: Number(req.params.id)
+        participantID: Number(req.query.id)
     });
 
     res.json(query);
 });
 
 router.put('/update/:id/:sessNum', async (req, res) => {
-    console.log(req.params);
+    console.log(req.query);
     await Participant.findOneAndUpdate({
         participantID: Number(req.params.id)
     }, {
