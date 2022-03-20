@@ -4,9 +4,10 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 
-const participantRouter = require('./routes/participant');
+const participantDataRouter = require('./routes/participantData');
 const downloadRouter = require('./routes/download');
 const logRouter = require('./routes/log');
+const participantRouter = require('./routes/participant');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -16,7 +17,11 @@ try {
         process.env.MONGODB_URI || 'mongodb+srv://bodilymap:Alcohol%24@coordinates.pmwd4.mongodb.net/test?authSource=admin&replicaSet=atlas-fpn2ab-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true',
         {
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+            useNewUrlParser: true,
+            useFindAndModify: true,
+            useCreateIndex: true,
+            useUnifiedToplogy: true
         }
     );
 } catch(e) {
@@ -36,9 +41,10 @@ app.use(express.urlencoded({
 
 }));
 
-app.use('/participant', participantRouter);
+app.use('/participantData', participantDataRouter);
 app.use('/download', downloadRouter);
 app.use('/log', logRouter);
+app.use('/participant', participantRouter);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));

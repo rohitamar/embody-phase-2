@@ -105,7 +105,7 @@ router.get('/dateRange', bodyParser, async (req, res) => {
         fs.mkdirSync('./participantdata')
     }
     //Begin aggregation pipeline
-    Participant.aggregate([
+    ParticipantData.aggregate([
         //Stage 1: Sort by Participant ID
         {
             $sort: {

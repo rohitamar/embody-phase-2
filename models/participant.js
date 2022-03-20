@@ -4,10 +4,7 @@ var ObjectID = require('mongodb').ObjectID;
 
 const ParticipantSchema = new Schema({
     participantID: Number,
-    coordXArray: Array,
-    coordYArray: Array,
-    sessionNumber: Number,
-    date: Date
+    sessionNumber: Number
 });
 
 const Participant = mongoose.model('Participant', ParticipantSchema);

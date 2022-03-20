@@ -198,7 +198,7 @@ class BodilyMapCanvas extends React.Component {
                this.cookies.set("repetition", 2, COOKIE_SETTINGS);
           }
 
-          axios.post('https://bodily-maps.herokuapp.com/participant/add', { 
+          axios.post('https://bodily-maps.herokuapp.com/participantData/add', { 
                participantID: ID,
                coordXArray: this.state.arrX,
                coordYArray: this.state.arrY,
@@ -209,7 +209,7 @@ class BodilyMapCanvas extends React.Component {
           const canvas = this.canvasRef.current;
           var participantImageData = canvas.toDataURL();
 
-          axios.post('https://bodily-maps.herokuapp.com/participant/pushBodilyMap', {
+          axios.post('https://bodily-maps.herokuapp.com/participantData/pushBodilyMap', {
                participantImagePath: sessionNumber + '__' + ID + '__' + dateLeft.toString(),
                participantImageData
           });

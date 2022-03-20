@@ -13,13 +13,11 @@ class ParticipantScreen extends React.Component {
         this.cookies = new Cookies();
         
         this.state = {
-            participantID: this.cookies.get("participantID") || 0,
-            sessionNumber: this.cookies.get("sessionNumber") ? Number(this.cookies.get("sessionNumber")) + 1 : 1
+            participantID: this.cookies.get("participantID") || 0
         };
     }
 
     handleSubmit() {
-        
         //Settings for the cookies we are using
         //These can be changed if you want the cookie to exist for longer
         //The one that I have used lasts for 1 month and 1 week
@@ -36,21 +34,29 @@ class ParticipantScreen extends React.Component {
         if(this.state.participantID == 0) {
             alert('Please enter a participant ID before submitting!');
         } else {
-            //Note that the participantID may not be the same as cookie. 
-            //In most cases, this.state.participantID will equal the cookies' participantID
-            //But, we still need to let the user override the cookie setting the input
-            //In the cases where the user has overrode this setting, the cookie's participantID needs to be changed
-            //and the session number needs to go back to 1
-            if(this.cookies.get("participantID") != this.state.participantID) {
-                this.cookies.set("sessionNumber", 1, COOKIE_SETTINGS);
-                this.cookies.set("dateEnteredActivation", "NO DATE", COOKIE_SETTINGS);
-                this.cookies.set("dateLeftActivation", "NO DATE", COOKIE_SETTINGS);
-                this.cookies.set("dateLeftDeactivation", "NO DATE", COOKIE_SETTINGS);
-                this.cookies.set("dateLeftDeactivation", "NO DATE", COOKIE_SETTINGS);
-            } else {
-                this.cookies.set("sessionNumber", this.state.sessionNumber, COOKIE_SETTINGS);
-            }
+            axios.get('https://bodily-maps.herokuapp.com/participant/find', {
+                params: {
+                    id: this.state.participantID
+                }
+            }).then((res) => {
+                if(res) {
+                    this.cookies.set("sessionNumber", res.sessionNumber + 1, COOKIE_SETTINGS);
+                    axios.put('https://bodily-maps.herokuapp.com/participant/update', {
+                        params: {
+                            id: this.state.participantID,
+                            sessNum: res.sessionNumber + 1
+                        }
+                    });
+                } else {
+                    
+                    axios.post('https://bodily-maps.herokuapp.com/participant/add', {
+                        participantID: this.state.participantID,
+                        sessionNumber: 1
+                    });
 
+                    this.cookies.set("sessionNumber", 1, COOKIE_SETTINGS);
+                }
+            });
             //We always will just need to set whatever inputted participantID as the cookie's value
             this.cookies.set("participantID", this.state.participantID, COOKIE_SETTINGS);
             

@@ -1,36 +1,8 @@
 const express = require('express');
 const { isEmpty } = require('lodash');
-const AWS = require('aws-sdk');
-
 const Participant = require('../models/participant');
 const router = express.Router();
-
-const bodyParser = require('body-parser');
-
-router.use(bodyParser.urlencoded({
-    limit: '50mb',
-    extended: false,
-    parameterLimit: 50000
-}));
-
-router.use(bodyParser.json({
-    limit: '50mb'
-}));
-
-const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
-const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
-
-const s3 = new AWS.S3({
-    accessKeyId: AWS_ACCESS_KEY_ID,
-    secretAccessKey: AWS_SECRET_ACCESS_KEY
-});
-
-router.get('/ping', async (req, res) => {
-    return res.json({
-        message: 'Server available',
-        statusCode: 200
-    });
-});
+//const bodyParser = require('body-parser');
 
 router.post('/add', async (req, res) => {
     if (isEmpty(req.body)) {
@@ -40,16 +12,13 @@ router.post('/add', async (req, res) => {
         });
     }
 
-    const { participantID, coordXArray, coordYArray, sessionNumber, date } = req.body;
+    const { participantID, sessionNumber } = req.body;
+
     const newParticipant = new Participant({
         participantID,
-        coordXArray,
-        coordYArray,
-        sessionNumber,
-        date
+        sessionNumber
     });
 
-    console.log(newParticipant);
     try {
         await newParticipant.save();
         res.json({
@@ -66,43 +35,38 @@ router.post('/add', async (req, res) => {
 
 });
 
-router.post('/pushBodilyMap', (req, res) => {
-    console.log(req);
-    const params = {
-        Bucket: 'bodilysensationimages',
-        Key: req.body.participantImagePath,
-        Body: req.body.participantImageData,
-    };
-
-
-    s3.putObject(params, (s3err, data) => {
-        if(s3err) throw s3err;
-        console.log(data);
+router.get('/find:id', async (req, res) => {
+    const query = await Participant.findOne({
+        participantID: Number(req.params.id)
     });
 
+    res.json(query);
 });
 
-router.put('/update/:id', async (req, res) => {
-    if(isEmpty(req.body)) {
-        return res.status(403).json({
-            error: 'Body cannot be empty. Invalid request.',
-            statusCode: 403
-        });
-    }
+router.put('/update/:id/:sessNum', async (req, res) => {
+    console.log(req.params);
+    await Participant.findOneAndUpdate({
+        participantID: Number(req.params.id)
+    }, {
+        sessionNumber: Number(req.params.sessNum)
+    });
+
+    res.json({
+        message: 'Updated participant ' + req.params.id + '\'s session number',
+        statusCode: 200
+    });
 });
 
-//Returns the id numbers and coordinates of every participant in the study
-router.post('/getAll', async (req, res) => {
-    try {
-        const allParticipants = await Participant.find({});
-        return res.json({
-            allParticipants
-        });
-    } catch (error) {
-        return res.status(500).json({
-            message: 'Internal Server error'
-        });
-    }
+router.delete('/delete:id', async (req, res) => {
+    const query = await Participant.findOneAndDelete({
+        participantID: Number(req.params.id)
+    });
+
+    res.json({
+        message: 'Successful deletion of participant ' + req.params.id,
+        statusCode: 200
+    });
+
 });
 
 module.exports = router;
