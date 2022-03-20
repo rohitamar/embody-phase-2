@@ -42,16 +42,15 @@ router.get('/find', async (req, res) => {
     res.json(query);
 });
 
-router.put('/update', async (req, res) => {
-    console.log(req.query);
+router.post('/update', async (req, res) => {
     await Participant.findOneAndUpdate({
-        participantID: Number(req.query.id)
+        participantID: Number(req.body.id)
     }, {
-        sessionNumber: Number(req.query.sessNum)
+        sessionNumber: Number(req.body.sessNum)
     });
 
     res.json({
-        message: 'Updated participant ' + req.query.id + '\'s session number',
+        message: 'Updated participant ' + req.body.id + '\'s session number',
         statusCode: 200
     });
 });
