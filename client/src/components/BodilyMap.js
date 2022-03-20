@@ -190,7 +190,7 @@ class BodilyMapCanvas extends React.Component {
                differenceBetweenActivationAndDeactivation = this.getTimeDifference(this.state.dateEntered, dateLeftActivation) >= 60;
           }
 
-          differenceActivation = this.getTimeDifference(dateLeft, this.state.dateEntered) >= 60;
+          differenceActivation = this.getTimeDifference(dateLeft, this.state.dateEntered) >= 3;
 
           if(differenceActivation || differenceBetweenActivationAndDeactivation) {
                let tempSessionNum = this.cookies.get("sessionNumber");
