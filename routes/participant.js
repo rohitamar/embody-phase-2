@@ -35,35 +35,33 @@ router.post('/add', async (req, res) => {
 
 });
 
-router.get('/find:id', async (req, res) => {
+router.get('/find', async (req, res) => {
     const query = await Participant.findOne({
         participantID: Number(req.query.id)
     });
-
     res.json(query);
 });
 
-router.put('/update/:id/:sessNum', async (req, res) => {
-    console.log(req.query);
+router.put('/update', async (req, res) => {
     await Participant.findOneAndUpdate({
-        participantID: Number(req.params.id)
+        participantID: Number(req.query.id)
     }, {
-        sessionNumber: Number(req.params.sessNum)
+        sessionNumber: Number(req.query.sessNum)
     });
 
     res.json({
-        message: 'Updated participant ' + req.params.id + '\'s session number',
+        message: 'Updated participant ' + req.query.id + '\'s session number',
         statusCode: 200
     });
 });
 
-router.delete('/delete:id', async (req, res) => {
+router.delete('/delete', async (req, res) => {
     const query = await Participant.findOneAndDelete({
-        participantID: Number(req.params.id)
+        participantID: Number(req.query.id)
     });
 
     res.json({
-        message: 'Successful deletion of participant ' + req.params.id,
+        message: 'Successful deletion of participant ' + req.query.id,
         statusCode: 200
     });
 
