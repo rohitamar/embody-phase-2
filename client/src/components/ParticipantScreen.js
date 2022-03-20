@@ -41,7 +41,7 @@ class ParticipantScreen extends React.Component {
                 }
             })
             .then((res) => {
-                if(res != null) {
+                if(res.data != null) {
                     this.cookies.set("sessionNumber", res.data.sessionNumber + 1, COOKIE_SETTINGS);
                     let sessNum = res.data.sessionNumber + 1
                     axios.put('https://bodily-maps.herokuapp.com/participant/update', {
