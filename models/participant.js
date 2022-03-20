@@ -6,6 +6,7 @@ const ParticipantSchema = new Schema({
     participantID: Number,
     coordXArray: Array,
     coordYArray: Array,
+    sessionNumber: Number,
     date: Date
 });
 

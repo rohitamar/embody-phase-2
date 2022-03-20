@@ -40,16 +40,16 @@ router.post('/add', async (req, res) => {
         });
     }
 
-    const { participantID, coordXArray, coordYArray, date } = req.body;
-
-
+    const { participantID, coordXArray, coordYArray, sessionNumber, date } = req.body;
     const newParticipant = new Participant({
         participantID,
         coordXArray,
         coordYArray,
+        sessionNumber,
         date
     });
 
+    console.log(newParticipant);
     try {
         await newParticipant.save();
         res.json({

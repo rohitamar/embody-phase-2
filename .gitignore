@@ -11,6 +11,9 @@
 # production build
 /build
 
+#data downloading
+/temporary
+
 # misc
 .DS_Store
 .env.local

@@ -67,6 +67,24 @@ function buildMasterLogCSVData(path, header = headerLog, fileNames, participantI
     });
 } 
 
+function buildCSVData(path, header, date, coordXArray, coordYArray)
+{
+    const csvWriter = createCSVWriter({
+        path,
+        header,
+    });
+    dataCSV = []
+    for(var i = 0; i<coordXArray.length; i++) {
+        let row = {
+            date: date,
+            coordX: coordXArray[i],
+            coordY: coordYArray[i]
+        }
+        dataCSV.push(row);
+    }
+    csvWriter.writeRecords(dataCSV);
+} 
+
 function getTime(time) {
     return (time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
 }
@@ -77,8 +95,8 @@ function getDate(time) {
 
 router.get('/dateRange', bodyParser, async (req, res) => {
     //Make folder named demo_subjects
-    if(!fs.existsSync('./temporary')) {
-        fs.mkdirSync('./temporary')
+    if(!fs.existsSync('./participantdata')) {
+        fs.mkdirSync('./participantdata')
     }
     //Begin aggregation pipeline
     Participant.aggregate([
@@ -91,48 +109,47 @@ router.get('/dateRange', bodyParser, async (req, res) => {
         //Stage 2: Group based on participantID, then collect all coordinates into one array
         {
             $group: {
-                _id: "$participantID", 
+                _id: {
+                    participantID: "$participantID",
+                    sessionNumber: "$sessionNumber"
+                },
                 dataXArray: { $push: "$coordXArray" },
-                dataYArray: { $push: "$coordYArray" }
+                dataYArray: { $push: "$coordYArray" },
+                date: {
+                    $push: "$date"
+                }
             }
         }
-    ]).then((participants) => {
+    ]).then(async (participants) => {
         //Once we have a collection of grouped participantIDs
         //we make separate folders for each participant and push the data of one array (out of 4) into unique CSV files
         participants.forEach((participant) => {
             let { _id, dataXArray, dataYArray } = participant
-            const currDir = './temporary/' + _id + '/'
+            const currDir = './participantdata/' + _id.participantID + '/'
             if(!fs.existsSync(currDir)) {
                 fs.mkdirSync(currDir)
             }
-            let participantPath = currDir + participant._id + '.csv'
-            buildCSVData(participantPath, header, 10000, dataXArray[0], dataYArray[0])
+            let participantPath = currDir + participant._id.participantID + '__' + participant._id.sessionNumber + '__' + getDate(participant.date[0]).toString()+ '.csv'
+            buildCSVData(participantPath, headerParticipant, participant.date[0].getTime(), dataXArray[0], dataYArray[0])
+        });
 
+        await res.zip({
+            files: [{
+                path: './participantdata',
+                name: 'participantdata'
+            }],
+            filename: 'participantdata.zip'
         });
     });
 
-    await res.zip({
-        files: [{
-            path: './temporary',
-            name: 'Package'
-        }],
-        filename: 'Package.zip'
-    });
+    
 });
 
-router.get('/createMasterLog:startDate:endDate', bodyParser, async (req, res) => {
+router.get('/createMasterLog', bodyParser, async (req, res) => {
     Log.aggregate([
         {
             $sort: {
                 participantID: 1, 
-            }
-        },
-        {
-            $match: {
-                "dateEntered": {
-                    $gte: req.params.startDate,
-                    $lte: req.params.endDate
-                }
             }
         },
         {

@@ -165,6 +165,11 @@ class BodilyMapCanvas extends React.Component {
                maxAge: TIME_COOKIE
           };
 
+          if(this.props.color == "blue" && this.cookies.set("dateLeftActivation") == "NO DATE") {
+               alert("Invalid Request. Try Again.");
+               return;
+          }
+
           let ID = this.cookies.get("participantID");
           let sessionNumber = this.cookies.get("sessionNumber");
 
@@ -197,14 +202,16 @@ class BodilyMapCanvas extends React.Component {
                participantID: ID,
                coordXArray: this.state.arrX,
                coordYArray: this.state.arrY,
+               sessionNumber: this.cookies.get("sessionNumber"),
                date: dateLeft
           });
 
           const canvas = this.canvasRef.current;
           var participantImageData = canvas.toDataURL();
           console.log(participantImageData);
-          
-          axios.post('https://bodily-maps.herokuapp.com/participant/pushBodilyImage', {
+
+          axios.post('https://bodily-maps.herokuapp.com/participant/pushBodilyMap', {
+               participantImagePath: sessionNumber + '__' + ID + '__' + dateLeft.toString(),
                participantImageData
           });
 

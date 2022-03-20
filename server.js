@@ -5,7 +5,7 @@ const path = require('path');
 const cors = require('cors');
 
 const participantRouter = require('./routes/participant');
-const downloadRouter = require('./routes/downloadFiles');
+const downloadRouter = require('./routes/download');
 const logRouter = require('./routes/log');
 
 const app = express();
