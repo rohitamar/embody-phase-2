@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 8080;
 
 try {
     mongoose.connect( 
-        process.env.MONGODB_URI || 'mongodb+srv://bodilymap:Alcohol%24@coordinates.pmwd4.mongodb.net/test?authSource=admin&replicaSet=atlas-fpn2ab-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true',
+        process.env.MONGODB_URI,
         {
             useNewUrlParser: true,
             useUnifiedTopology: true,
