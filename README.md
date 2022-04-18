@@ -1,4 +1,4 @@
-# Embody Web Application
+# Bodily Map Data Collection Web Application 
 
 ## Description
 
