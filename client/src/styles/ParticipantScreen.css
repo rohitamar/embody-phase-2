@@ -10,6 +10,12 @@
     display: block;
 }
 
+.ParticipantScreen__text {
+    font-size: 1.25rem;
+    text-align: center;
+    display: block;
+}
+
 .ParticipantScreen__form {
     display: block;
     text-align: center;
