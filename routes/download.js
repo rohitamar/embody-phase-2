@@ -1,6 +1,6 @@
 const express = require('express');
 const { isEmpty } = require('lodash');
-const Participant = require('../models/participant');
+const ParticipantData = require('../models/participantData');
 const Log = require('../models/log');
 const router = express.Router();
 const fs = require('fs');
