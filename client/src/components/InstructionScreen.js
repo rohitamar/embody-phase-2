@@ -9,11 +9,20 @@ class InstructionScreen extends React.Component {
         this.cookies = new Cookies();
     }
 
+    //if sesnum = 1
+    //
+    //if sesnum = 2
+    //
+    // if sesnum = 3
+    // 
+    //if sesnum = 4
+    //
+    
     render() {
         return (
             <div className = "InstructionScreen__wrapper">
                 <div className = "InstructionScreen__title">
-                    Instructions for participants are flexible and will be adapted depending on the experiment. Experimental conditions and titles during the task are also flexible.
+                    In this task, you need to indicate where you feel sensations in your body at the present moment. 
                 </div>
                 <NavLink 
                     className = "InstructionScreen__button"

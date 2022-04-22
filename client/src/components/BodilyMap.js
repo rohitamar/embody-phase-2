@@ -248,11 +248,11 @@ class BodilyMapCanvas extends React.Component {
                          </div>
                     </div>
                     <h1 className = "BodilyMapCanvas__header">
-                         Indicate where you feel {
+                         For this body, color the regions whose activity you feel is {
                               this.props.color == "red" ? 
-                              <span className = "BodilyMapCanvas__header--bold">activation</span> :
-                              <span className = "BodilyMapCanvas__header--bold">deactivation</span>
-                         } now.
+                              <span className = "BodilyMapCanvas__header--bold">stronger or faster.</span> :
+                              <span className = "BodilyMapCanvas__header--bold">weaker or slower.</span>
+                         }
                     </h1>
                </div>
           );

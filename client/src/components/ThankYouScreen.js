@@ -27,7 +27,7 @@ class ThankYouScreen extends React.Component {
         return (
             <div className = "ThankYouScreen__wrapper">
                 <div className = "ThankYouScreen__title">
-                    Thank you for participating in this study!
+                    Thank you! Please close this tab now and go back to Qualtrics.
                 </div>
             </div>
         );

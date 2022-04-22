@@ -74,7 +74,7 @@ class ParticipantScreen extends React.Component {
     render() {
         return (
             <div className = "ParticipantScreen__wrapper">
-                <h1 className = "ParticipantScreen__header">Hungover and Bodily Sensations</h1>
+                <h1 className = "ParticipantScreen__header">Hangover and Bodily Sensations</h1>
                 <p className = "ParticipantScreen__text">Please indicate your participant ID number</p>
                 <form 
                     className = "ParticipantScreen__form" 
