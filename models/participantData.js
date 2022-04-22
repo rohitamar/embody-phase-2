@@ -10,6 +10,6 @@ const ParticipantDataSchema = new Schema({
     date: Date
 });
 
-const Participant = mongoose.model('ParticipantData', ParticipantDataSchema);
+const ParticipantData = mongoose.model('ParticipantData', ParticipantDataSchema);
 
-module.exports = Participant;
+module.exports = ParticipantData;
