@@ -11,6 +11,9 @@
     font-weight: bold;
     font-size: 1rem;
     width: 92vw;
+    white-space: pre-wrap;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 .InstructionScreen__button {
