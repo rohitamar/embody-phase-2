@@ -28,6 +28,7 @@ class InstructionScreen extends React.Component {
                     id: this.state.participantID
             }
         }).then((res) => {
+            console.log(res);
             this.determineSession = (res.data.sessionNumber > 1) ? false : true;
         });
     }

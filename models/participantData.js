@@ -12,4 +12,4 @@ const ParticipantDataSchema = new Schema({
 
 const ParticipantData = mongoose.model('ParticipantData', ParticipantDataSchema);
 
-module.exports = ParticipantData;
+module.exports = ParticipantData; 

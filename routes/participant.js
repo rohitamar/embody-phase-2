@@ -55,6 +55,10 @@ router.post('/update', async (req, res) => {
     });
 });
 
+router.get('/deleteAll', async (req, res) => {
+    
+});
+
 router.delete('/delete', async (req, res) => {
     const query = await Participant.findOneAndDelete({
         participantID: Number(req.query.id)
