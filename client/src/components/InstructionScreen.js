@@ -1,6 +1,7 @@
 import React from 'react';
 import Cookies from 'universal-cookie';
 import { NavLink } from "react-router-dom";
+import axios from 'axios';
 
 class InstructionScreen extends React.Component {
 
@@ -37,7 +38,7 @@ class InstructionScreen extends React.Component {
         return (
             <div className = "InstructionScreen__wrapper">
                 <div className = "InstructionScreen__title">
-                    { determineSession ? this.firstSessionInstruction : this.otherSessionInstruction }
+                    { this.determineSession ? this.firstSessionInstruction : this.otherSessionInstruction }
                 </div>
                 <NavLink 
                     className = "InstructionScreen__button"
@@ -51,4 +52,4 @@ class InstructionScreen extends React.Component {
     }
 }
 
-export default InstructionScreen;
+export default InstructionScreen; 
