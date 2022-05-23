@@ -87,14 +87,14 @@ function buildCSVData(path, header, date, coordXArray, coordYArray)
 
 function getTime(time) {
     if(time)
-        return (time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
+        return ((time.getHours() - 4) + ":" + time.getMinutes() + ":" + time.getSeconds());
     else
         return 0;
 }
 
 function getDate(time) {
     if(time)
-        return time.getFullYear() + '-' + (time.getMonth() - 1) + '-' + time.getDate();
+        return time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate();
     else
         return 0;
 }
