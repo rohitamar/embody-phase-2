@@ -86,7 +86,6 @@ class ParticipantScreen extends React.Component {
                             <input 
                                 value = {this.state.participantID}
                                 className = "ParticipantScreen__inputID" 
-                                type = "number" 
                                 onChange = {this.handleInputChange} 
                             />    
                         </label>
