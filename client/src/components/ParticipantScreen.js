@@ -24,7 +24,7 @@ class ParticipantScreen extends React.Component {
         //The one that I have used lasts for 1 month and 1 week
         //Essentially, you want TIME_COOKIE to be the duration of your experiment, so it'll vary from one experiment to the next
 
-        const TIME_COOKIE = 2592000;
+        const TIME_COOKIE = 2592001;
         const PATH_COOKIE = '/';
 
         const COOKIE_SETTINGS = {
