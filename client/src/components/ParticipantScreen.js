@@ -22,7 +22,7 @@ class ParticipantScreen extends React.Component {
         //Settings for the cookies we are using
         //These can be changed if you want the cookie to exist for longer
         //The one that I have used lasts for 1 month and 1 week
-        //Essentially, you want TIME_COOKIE to be the duration of your experiment, so it'll vary from one experiment to the next
+        //Essentially, you TIME_COOKIE to be the duration of your experiment, so it'll vary from one experiment to the next
 
         const TIME_COOKIE = 2592001;
         const PATH_COOKIE = '/';
