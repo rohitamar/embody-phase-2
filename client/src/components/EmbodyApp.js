@@ -14,7 +14,7 @@ class EmbodyApp extends React.Component {
         super(props);
         this.cookies = new Cookies();    
         this.authentication = this.cookies.get("participantID") == undefined;
-        //this.trial = this.cookies.get("participantID") > 1001
+        //this.trial = this.cookies.get("participantID") > 1002
     }
 
     render() {
