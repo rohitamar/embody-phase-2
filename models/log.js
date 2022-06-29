@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 var ObjectID = require('mongodb').ObjectID;
 
 const LogSchema = new Schema({
-    participantID: Number,
+    participantID: String,
     dateEntered: Date,
     dateLeft: Date,
     type: String,

@@ -37,7 +37,7 @@ router.post('/add', async (req, res) => {
 
 router.get('/find', async (req, res) => {
     const query = await Participant.findOne({
-        participantID: Number(req.query.id)
+        participantID: req.query.id
     });
     res.json(query);
 });
@@ -61,7 +61,7 @@ router.get('/deleteAll', async (req, res) => {
 
 router.delete('/delete', async (req, res) => {
     const query = await Participant.findOneAndDelete({
-        participantID: Number(req.query.id)
+        participantID: req.query.id
     });
 
     res.json({

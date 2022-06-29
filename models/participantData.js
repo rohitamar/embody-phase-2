@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 var ObjectID = require('mongodb').ObjectID;
 
 const ParticipantDataSchema = new Schema({
-    participantID: Number,
+    participantID: String,
     coordXArray: Array,
     coordYArray: Array,
     sessionNumber: Number,
