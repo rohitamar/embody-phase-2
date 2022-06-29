@@ -44,7 +44,7 @@ router.get('/find', async (req, res) => {
 
 router.post('/update', async (req, res) => {
     await Participant.findOneAndUpdate({
-        participantID: Number(req.body.id)
+        participantID: req.body.id
     }, {
         sessionNumber: Number(req.body.sessNum)
     });
