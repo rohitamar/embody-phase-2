@@ -14,7 +14,7 @@ class ParticipantScreen extends React.Component {
         this.cookies = new Cookies();
         
         this.state = {
-            participantID: this.cookies.get("participantID") || 0
+            participantID: this.cookies.get("participantID") || ''
         };
     }
 
@@ -32,7 +32,7 @@ class ParticipantScreen extends React.Component {
             maxAge: TIME_COOKIE
         };
 
-        if(this.state.participantID == 0) {
+        if(this.state.participantID == '') {
             alert('Please enter a participant ID before submitting.');
         } else {
             axios.get('https://bodily-maps.herokuapp.com/participant/find', {
