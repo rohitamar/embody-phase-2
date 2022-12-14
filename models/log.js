@@ -10,6 +10,7 @@ const LogSchema = new Schema({
     sessionNumber: Number,
     dataValidity: String
 });
+//t
 
 const Log = mongoose.model('Log', LogSchema);
 
